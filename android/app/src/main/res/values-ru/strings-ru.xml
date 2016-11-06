@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Idee</string>
+    <string name="idea_title">Сохрани свои идеи!</string>
+    <string name="action_settings">Настройки</string>
+    <string name="hint_mess">Ваш логин</string>
+    <string name="hint_pass">Ваш пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="anonymous">Анонимный вход</string>
+</resources>
