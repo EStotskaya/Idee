@@ -19,7 +19,15 @@ var gulp = require('gulp'), // Подключаем Gulp
         img: 'app/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
         fonts: 'app/fonts/**/*.*'
     },
-      // куда складывать готовые после сборки файлы
+      // куда складывать файлы во время разработки
+      build: { 
+        html: 'build/',
+        js: 'build/js/',
+        css: 'build/css/',
+        img: 'build/img/',
+        fonts: 'build/fonts/'
+      },
+      // куда складывать файлы для продакшена
       dist: { 
         html: 'dist/',
         js: 'dist/js/',
@@ -36,11 +44,23 @@ var gulp = require('gulp'), // Подключаем Gulp
         fonts: 'app/fonts/**/*.*'
       },
       // что будем подчищать
-      clean: './dist'
+      clean: {
+        develop: './build',
+        dist: './dist'
+      }
     };
 
 // BROWSER SYNC
-gulp.task('browser-sync', function() { // Создаем таск browser-sync
+gulp.task('browser-sync:develop', function() { // Создаем таск browser-sync
+    browserSync({ // Выполняем browser Sync
+        server: { // Определяем параметры сервера
+            baseDir: './build' // Директория для сервера - dist
+        },
+        notify: false // Отключаем уведомления
+    });
+});
+
+gulp.task('browser-sync:dist', function() { // Создаем таск browser-sync
     browserSync({ // Выполняем browser Sync
         server: { // Определяем параметры сервера
             baseDir: './dist' // Директория для сервера - dist
@@ -51,66 +71,113 @@ gulp.task('browser-sync', function() { // Создаем таск browser-sync
 
 
 // HTML
-gulp.task('html', function() { // Создаем таск для HTML
+gulp.task('html:develop', function() { // Создаем таск для HTML
+  gulp.src(path.src.html) // Указываем ресурс
+  .pipe(gulp.dest(path.build.html)) //Выплюнем их в папку build
+  .pipe(browserSync.reload({stream:true})); // Выполняем обновление в браузере
+});
+
+gulp.task('html:dist', function() { // Создаем таск для HTML
   gulp.src(path.src.html) // Указываем ресурс
   .pipe(gulp.dest(path.dist.html)) //Выплюнем их в папку dist
   .pipe(browserSync.reload({stream:true})); // Выполняем обновление в браузере
 });
 
 // SCSS
-gulp.task('scss', function() { // Создаем таск "sass"
+gulp.task('scss:develop', function() { // Создаем таск "sass"
     gulp.src(path.src.style) // Берем источник
         .pipe(sourcemaps.init()) // Инициализируем sourcemaps
+        .pipe(sass().on('error', sass.logError))// Преобразуем Scss в CSS посредством gulp-sass
+        .pipe(cssmin()) // Минимизируем их
+        .pipe(sourcemaps.write()) // Запишем sourcemaps
+        .pipe(gulp.dest(path.build.css)) // Выгружаем результат в папку build/css
+        .pipe(browserSync.reload({stream: true})) // Обновляем CSS на странице при изменении
+});
+
+gulp.task('scss:dist', function() { // Создаем таск "sass"
+    gulp.src(path.src.style) // Берем источник
         .pipe(sass().on('error', sass.logError))// Преобразуем Scss в CSS посредством gulp-sass
         .pipe(autoprefixer({ // Добавляем префиксы
             browsers: ['last 10 versions'], 
             cascade: false
         }))
         .pipe(cssmin()) // Минимизируем их
-        .pipe(sourcemaps.write()) // Запишем sourcemaps
         .pipe(gulp.dest(path.dist.css)) // Выгружаем результат в папку dist/css
         .pipe(browserSync.reload({stream: true})) // Обновляем CSS на странице при изменении
 });
 
 // IMAGES
-gulp.task('image', function () {
+gulp.task('image:develop', function () {
     gulp.src(path.src.img) //Выберем наши картинки
-        .pipe(gulp.dest(path.dist.img)) //И бросим dist
+        .pipe(gulp.dest(path.build.img)) //И бросим в build
+        .pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('image:dist', function () {
+    gulp.src(path.src.img) //Выберем наши картинки
+        .pipe(gulp.dest(path.dist.img)) //И бросим в dist
         .pipe(browserSync.reload({stream: true}));
 });
 
 // FONTS
-gulp.task('fonts', function() {
+gulp.task('fonts:develop', function() {
+    gulp.src(path.src.fonts)
+        .pipe(gulp.dest(path.build.fonts))
+        .pipe(browserSync.reload({stream: true}));
+});
+
+gulp.task('fonts:dist', function() {
     gulp.src(path.src.fonts)
         .pipe(gulp.dest(path.dist.fonts))
         .pipe(browserSync.reload({stream: true}));
 });
 
 // JS
-gulp.task('js', function () {
+gulp.task('js:develop', function () {
     gulp.src(path.src.js) //Найдем наш main файл
         .pipe(rigger()) //Прогоним через rigger
         .pipe(sourcemaps.init()) //Инициализируем sourcemap
         .pipe(babel({ presets: ['es2015'] })) // перепишем на старый js
-        .pipe(uglify()) //Сожмем наш js
         .pipe(sourcemaps.write()) //Пропишем карты
-        .pipe(gulp.dest(path.dist.js)) //Выплюнем готовый файл в build
+        .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
         .pipe(browserSync.reload({stream: true})); //И перезагрузим сервер
 });
 
+gulp.task('js:dist', function () {
+    gulp.src(path.src.js) //Найдем наш main файл
+        .pipe(rigger()) //Прогоним через rigger
+        .pipe(babel({ presets: ['es2015'] })) // перепишем на старый js
+        .pipe(uglify()) //Сожмем наш js
+        .pipe(gulp.dest(path.dist.js)) //Выплюнем готовый файл в build
+        .pipe(browserSync.reload({stream: true})); // И перезагрузим сервер
+});
+
 // WATCHER
-gulp.task('watch', function() {
-    gulp.watch(path.watch.html, ['html']); // Наблюдение за HTML файлами
-    gulp.watch(path.watch.scss, ['scss']); // Наблюдение за SCSS файлами
-    gulp.watch(path.watch.js, ['js']); // Наблюдение за картинками
-    gulp.watch(path.watch.fonts, ['fonts']); // Наблюдение шрифтами
-    gulp.watch(path.watch.img, ['image']); // Наблюдение за картинками
-    // Наблюдение за другими типами файлов
+gulp.task('watch:develop', function() {
+    gulp.watch(path.watch.html, ['html:develop']); // Наблюдение за HTML файлами
+    gulp.watch(path.watch.scss, ['scss:develop']); // Наблюдение за SCSS файлами
+    gulp.watch(path.watch.js, ['js:develop']); // Наблюдение за картинками
+    gulp.watch(path.watch.fonts, ['fonts:develop']); // Наблюдение шрифтами
+    gulp.watch(path.watch.img, ['image:develop']); // Наблюдение за картинками
+});
+
+gulp.task('watch:dist', function() {
+    gulp.watch(path.watch.html, ['html:dist']); // Наблюдение за HTML файлами
+    gulp.watch(path.watch.scss, ['scss:dist']); // Наблюдение за SCSS файлами
+    gulp.watch(path.watch.js, ['js:dist']); // Наблюдение за картинками
+    gulp.watch(path.watch.fonts, ['fonts:dist']); // Наблюдение шрифтами
+    gulp.watch(path.watch.img, ['image:dist']); // Наблюдение за картинками
 });
 
 // CLEANER
-gulp.task('clean', function (cb) {
-    rimraf(path.clean, cb);
+gulp.task('clean:develop', function (cb) {
+    rimraf(path.clean.develop, cb);
 });
 
-gulp.task('develop', ['html', 'scss', 'js', 'image', 'fonts', 'watch', 'browser-sync']); // Инициализация всех файлов, включения вотчера и автообновления в браузере
+gulp.task('clean:dist', function (cb) {
+    rimraf(path.clean.dist, cb);
+});
+
+gulp.task('develop', ['html:develop', 'scss:develop', 'js:develop', 'image:develop', 'fonts:develop', 'watch:develop', 'browser-sync:develop']); // Инициализация всех файлов, включения вотчера и автообновления в браузере
+
+gulp.task('dist', ['html:dist', 'scss:dist', 'js:dist', 'image:dist', 'fonts:dist', 'watch:dist', 'browser-sync:dist']); // Инициализация всех файлов, включения вотчера и автообновления в браузере

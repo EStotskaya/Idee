@@ -1,4 +1,4 @@
 (function() {
-  let x = 10;
+  let x = 12;
   alert(x);
 }());
