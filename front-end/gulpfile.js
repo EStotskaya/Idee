@@ -8,16 +8,17 @@ var gulp = require('gulp'), // Подключаем Gulp
     browserSync = require('browser-sync'), // Подключаем Browser Sync;
     rimraf = require('rimraf'), // rm rf для ноды
     babel = require('gulp-babel'), // для использования es2015 в старых браузерах
+    pug = require('gulp-pug'), // подключает pug (jade)
     
     // переменные путей
     path = {
       // источник
       src: { //Пути откуда брать исходники
-        html: 'app/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
+        pug: 'app/*.pug', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
         js: 'app/js/main.js', //В стилях и скриптах нам понадобятся только main файлы
         style: 'app/scss/main.scss',
         img: 'app/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
-        fonts: 'app/fonts/**/*.*'
+        fonts: 'app/fonts/**/*.*',
     },
       // куда складывать файлы во время разработки
       build: { 
@@ -37,7 +38,7 @@ var gulp = require('gulp'), // Подключаем Gulp
       },
       // за какими файлами будем наблюдать
       watch: {
-        html: 'app/**/*.html',
+        pug: 'app/**/*.pug',
         js: 'app/js/**/*.js',
         scss: 'app/scss/**/*.scss',
         img: 'app/img/**/*.*',
@@ -70,17 +71,29 @@ gulp.task('browser-sync:dist', function() { // Создаем таск browser-s
 });
 
 
-// HTML
-gulp.task('html:develop', function() { // Создаем таск для HTML
-  gulp.src(path.src.html) // Указываем ресурс
-  .pipe(gulp.dest(path.build.html)) //Выплюнем их в папку build
-  .pipe(browserSync.reload({stream:true})); // Выполняем обновление в браузере
+gulp.task('pug', function build() {
+  return gulp.src('/**.pug')
+    .pipe(pug(options))
+    .pipe(gulp.dest('out'));
 });
 
-gulp.task('html:dist', function() { // Создаем таск для HTML
-  gulp.src(path.src.html) // Указываем ресурс
-  .pipe(gulp.dest(path.dist.html)) //Выплюнем их в папку dist
-  .pipe(browserSync.reload({stream:true})); // Выполняем обновление в браузере
+// HTML
+gulp.task('pug:develop', function() { // Создаем таск для HTML
+  gulp.src(path.src.pug)
+    .pipe(pug({ 
+        pretty: true 
+      })) // компилировать pug в html
+    .pipe(gulp.dest(path.build.html)) // выплюнуть html по назначению
+    .pipe(browserSync.reload({stream:true})); // Выполняем обновление в браузере
+});
+
+gulp.task('pug:dist', function() { // Создаем таск для HTML
+    gulp.src(path.src.pug)
+    .pipe(pug({ 
+        pretty: true 
+      })) // компилировать pug в html
+    .pipe(gulp.dest(path.dist.html)) // выплюнуть html по назначению
+    .pipe(browserSync.reload({stream:true})); // Выполняем обновление в браузере
 });
 
 // SCSS
@@ -154,7 +167,7 @@ gulp.task('js:dist', function () {
 
 // WATCHER
 gulp.task('watch:develop', function() {
-    gulp.watch(path.watch.html, ['html:develop']); // Наблюдение за HTML файлами
+    gulp.watch(path.watch.pug, ['pug:develop']); // Наблюдение за HTML файлами
     gulp.watch(path.watch.scss, ['scss:develop']); // Наблюдение за SCSS файлами
     gulp.watch(path.watch.js, ['js:develop']); // Наблюдение за картинками
     gulp.watch(path.watch.fonts, ['fonts:develop']); // Наблюдение шрифтами
@@ -162,7 +175,7 @@ gulp.task('watch:develop', function() {
 });
 
 gulp.task('watch:dist', function() {
-    gulp.watch(path.watch.html, ['html:dist']); // Наблюдение за HTML файлами
+    gulp.watch(path.watch.pug, ['pug:dist']); // Наблюдение за HTML файлами
     gulp.watch(path.watch.scss, ['scss:dist']); // Наблюдение за SCSS файлами
     gulp.watch(path.watch.js, ['js:dist']); // Наблюдение за картинками
     gulp.watch(path.watch.fonts, ['fonts:dist']); // Наблюдение шрифтами
@@ -178,6 +191,6 @@ gulp.task('clean:dist', function (cb) {
     rimraf(path.clean.dist, cb);
 });
 
-gulp.task('develop', ['html:develop', 'scss:develop', 'js:develop', 'image:develop', 'fonts:develop', 'watch:develop', 'browser-sync:develop']); // Инициализация всех файлов, включения вотчера и автообновления в браузере
+gulp.task('develop', ['pug:develop', 'scss:develop', 'js:develop', 'image:develop', 'fonts:develop', 'watch:develop', 'browser-sync:develop']); // Инициализация всех файлов, включения вотчера и автообновления в браузере
 
-gulp.task('dist', ['html:dist', 'scss:dist', 'js:dist', 'image:dist', 'fonts:dist', 'watch:dist', 'browser-sync:dist']); // Инициализация всех файлов, включения вотчера и автообновления в браузере
+gulp.task('dist', ['pug:dist', 'scss:dist', 'js:dist', 'image:dist', 'fonts:dist', 'watch:dist', 'browser-sync:dist']); // Инициализация всех файлов, включения вотчера и автообновления в браузере
