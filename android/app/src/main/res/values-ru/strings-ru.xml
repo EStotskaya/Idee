@@ -7,4 +7,18 @@
     <string name="sign_in">Войти</string>
     <string name="sign_up">Регистрация</string>
     <string name="anonymous">Анонимный вход</string>
+    <string name="back">Назад</string>
+
+    <string name="title_activity_registration">Регистрация</string>
+
+    <string name="registration_text">Зарегистрируйтесь, чтоб обмениваться идеями!</string>
+    <string name="login_reg">Введите логин: </string>
+    <string name="pass_reg">Введите пароль: </string>
+    <string name="login_hint">Разрешены: a-z, A-Z, 0-9 </string>
+    <string name="pass_hint">Мин. 6 символов </string>
+    <string name="reg">Регистрация!</string>
+
+    <string name="regMess">Сохранить изменения?</string>
+    <string name="da">Да</string>
+    <string name="net">Нет</string>
 </resources>

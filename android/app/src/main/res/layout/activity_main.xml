@@ -1,8 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
@@ -29,7 +25,8 @@
             android:textSize="32dp"
             android:textColor="@color/BROWN"
             android:id="@+id/text"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -44,7 +41,9 @@
             android:textStyle="normal"
             android:layout_alignStart="@+id/text"
             android:layout_alignEnd="@+id/text"
-            android:maxLength="12"/>
+            android:maxLength="12"
+            android:visibility="gone"
+            android:fontFamily="sans-serif-thin"/>
 
         <EditText
             android:layout_width="wrap_content"
@@ -60,33 +59,52 @@
             android:layout_alignStart="@+id/editLogin"
             android:layout_alignEnd="@+id/editLogin"
             android:inputType="textPassword"
-            android:maxLength="10"/>
+            android:maxLength="10"
+            android:visibility="gone"
+            android:fontFamily="sans-serif-thin"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/back"
+            android:layout_below="@+id/editPass"
+            android:layout_centerHorizontal="true"
+            android:text="@string/back"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:textColor="@color/BLACK"
+            android:visibility="gone"
+            />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/signIn"
-            android:layout_below="@+id/editPass"
-            android:layout_alignStart="@+id/editPass"
+            android:layout_below="@+id/text"
+            android:layout_alignStart="@+id/editLogin"
             android:text="@string/sign_in"
             android:textSize="25dp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
-            android:textColor="@color/BLACK" />
+            android:textColor="@color/BLACK"
+            android:fontFamily="sans-serif-medium"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/signUp"
-            android:layout_below="@+id/editPass"
+            android:layout_below="@+id/text"
             android:layout_alignEnd="@+id/editPass"
             android:text="@string/sign_up"
             android:textSize="25dp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
-            android:textColor="@color/BLACK" />
+            android:textColor="@color/BLACK"
+            android:fontFamily="sans-serif-medium"/>
 
         <Button
             android:layout_width="match_parent"
@@ -97,11 +115,11 @@
             android:textSize="25dp"
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
-            android:textColor="@color/BLACK" />
+            android:textColor="@color/BLACK"
+            android:fontFamily="sans-serif-medium"/>
 
 
 
 
 
 </RelativeLayout>
-</ScrollView>

@@ -1,11 +1,13 @@
 package com.code_and_fix.idee;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,6 +24,34 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.signIn) Button signIn;
     @Bind(R.id.signUp) Button signUp;
     @Bind(R.id.anonymous) Button anonymous;
+    @Bind(R.id.back) Button backButt;
+
+    @OnClick(R.id.signIn) void showEditText(Button butt)
+    {
+        editLogin.setVisibility(View.VISIBLE);
+        editPass.setVisibility(View.VISIBLE);
+        backButt.setVisibility(View.VISIBLE);
+        signIn.setVisibility(View.GONE);
+        signUp.setVisibility(View.GONE);
+        anonymous.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.back) void backToButtons(Button butt)
+    {
+        editLogin.setVisibility(View.GONE);
+        editPass.setVisibility(View.GONE);
+        backButt.setVisibility(View.GONE);
+        signIn.setVisibility(View.VISIBLE);
+        signUp.setVisibility(View.VISIBLE);
+        anonymous.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.signUp) public void registration(Button butt)
+    {
+        Intent intent = new Intent(this, Registration.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

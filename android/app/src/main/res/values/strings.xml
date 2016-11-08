@@ -7,4 +7,18 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="anonymous">Anonymous</string>
+    <string name="back">Back</string>
+    <string name="title_activity_registration">Registration</string>
+
+    <string name="registration_text">Sign up to use all the advantages of idea sharing!</string>
+    <string name="login_reg">Enter your login: </string>
+    <string name="pass_reg">Enter password: </string>
+    <string name="login_hint">Required: a-z, A-Z, 0-9 </string>
+    <string name="pass_hint">Minimum 6 symbols </string>
+    <string name="reg">Register!</string>
+
+    <string name="regMess">Save changes?</string>
+    <string name="da">Yes</string>
+    <string name="net">No</string>
+
 </resources>
