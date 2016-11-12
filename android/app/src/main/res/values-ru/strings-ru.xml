@@ -21,4 +21,14 @@
     <string name="regMess">Сохранить изменения?</string>
     <string name="da">Да</string>
     <string name="net">Нет</string>
+
+    <string name="title_activity_app">AppActivity</string>
+
+    <string-array name="categories">
+        <item>Все идеи</item>
+        <item>Мои кабинет</item>
+        <item>Поиск...</item>
+    </string-array>
+
+    <string name="new_idea">Новая идея</string>
 </resources>

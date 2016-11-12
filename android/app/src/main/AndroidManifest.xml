@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.code_and_fix.idee.MainActivity" />
         </activity>
+        <activity
+            android:name=".AppActivity"
+            android:label="@string/title_activity_app" >
+        </activity>
     </application>
 
 </manifest>

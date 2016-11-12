@@ -3,6 +3,7 @@ package com.code_and_fix.idee;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class Registration extends AppCompatActivity {
     @Bind(R.id.passEdit) EditText pass;
     @Bind(R.id.backButt) Button backButt;
     @Bind(R.id.register) Button regButt;
+    SharedPreferences sp;
 
     @OnClick(R.id.backButt) public void back(Button butt)
     {
@@ -40,6 +42,13 @@ public class Registration extends AppCompatActivity {
                 //change later, must not open start page
                 else
                 {
+                    sp = getSharedPreferences("regInfo", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString("Saved login", login.getText().toString());
+                    edit.putString("Saved pass", pass.getText().toString());
+                    edit.commit();
+                    Toast.makeText(Registration.this, "Saved", Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(Registration.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     finish();
@@ -66,12 +75,40 @@ public class Registration extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.register) public void register(Button button)
+    {
+        if(check().length()==0) {
+            sp = getSharedPreferences("accInfo", MODE_PRIVATE);
+            SharedPreferences.Editor edit = sp.edit();
+            edit.putString("Saved login", login.getText().toString());
+            edit.putString("Saved pass", pass.getText().toString());
+            edit.commit();
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, AppActivity.class);
+            intent.putExtra(AppActivity.LOGIN_INFO, login.getText().toString());
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            finish();
+            startActivity(intent);
+
+        }
+        else
+        {
+            Toast.makeText(this, check(), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ButterKnife.bind(this);
+
+        sp=getSharedPreferences("regInfo", MODE_PRIVATE);
+        login.setText(sp.getString("Saved login", ""));
+        pass.setText(sp.getString("Saved pass", ""));
     }
 
 

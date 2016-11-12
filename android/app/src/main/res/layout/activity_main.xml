@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/back"
             android:layout_below="@+id/editPass"
-            android:layout_centerHorizontal="true"
+            android:layout_alignStart="@+id/editPass"
             android:text="@string/back"
             android:textSize="25dp"
             android:textStyle="bold"
@@ -77,6 +77,21 @@
             android:textColor="@color/BLACK"
             android:visibility="gone"
             />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/signToApp"
+            android:layout_below="@+id/editPass"
+            android:layout_alignEnd="@+id/editPass"
+            android:text="@string/sign_in"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:textColor="@color/BLACK"
+            android:fontFamily="sans-serif-medium"
+            android:visibility="gone"/>
 
         <Button
             android:layout_width="wrap_content"

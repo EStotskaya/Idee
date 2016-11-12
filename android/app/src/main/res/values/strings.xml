@@ -20,5 +20,18 @@
     <string name="regMess">Save changes?</string>
     <string name="da">Yes</string>
     <string name="net">No</string>
+    <string name="title_activity_app">AppActivity</string>
+
+    <string-array name="categories">
+        <item>All ideas</item>
+        <item>My cabinet</item>
+        <item>Search...</item>
+    </string-array>
+
+    <string name="new_idea">New idea</string>
+
+    <string name="opendrawer">Open</string>
+    <string name="closedrawer">Close</string>
+
 
 </resources>
