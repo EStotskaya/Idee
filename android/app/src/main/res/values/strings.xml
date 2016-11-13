@@ -33,5 +33,12 @@
     <string name="opendrawer">Open</string>
     <string name="closedrawer">Close</string>
 
+    <string name="new_idea_body">Enter your idea here!</string>
+    <string name="add_tag">Add tag...</string>
+
+    <string name="my_cab_info">My cabinet</string>
+    <string name="my_ideas">My ideas : </string>
+    <string name="change_pic">Change pic..</string>
+
 
 </resources>

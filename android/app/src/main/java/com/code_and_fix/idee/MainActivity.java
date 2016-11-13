@@ -59,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.signUp)
     public void registration(Button butt) {
         Intent intent = new Intent(this, Registration.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+
     }
 
     @OnClick(R.id.signToApp) public void signToApp(Button button)

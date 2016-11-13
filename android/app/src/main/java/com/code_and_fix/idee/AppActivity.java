@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.app.Fragment;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,15 +17,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemClick;
 
 public class AppActivity extends AppCompatActivity {
@@ -32,10 +40,13 @@ public class AppActivity extends AppCompatActivity {
     public static String LOGIN_INFO = "login";
     private int currentPosition;
     ActionBarDrawerToggle drawerToggle;
+    //change!!
+    String oursite;
 
     @Bind(R.id.drawerLayout) DrawerLayout drawerLayout;
     @Bind(R.id.drawer) ListView drawerList;
     @Bind(R.id.logInfo) TextView logInfo;
+    @Bind(R.id.profilePic) ImageView profilePic;
 
     ArrayList<String> titles;
 
@@ -44,12 +55,20 @@ public class AppActivity extends AppCompatActivity {
         selectItem(position);
     }
 
+    @OnClick(R.id.logInfo) public void newIdeaCreator(View view)
+    {
+        newIdeaCreator();
+    }
+
+    @OnClick(R.id.profilePic) public void myCabOpen(View view) {selectItem(1);};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
         ButterKnife.bind(this);
         drawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.categories)));
+
         if (savedInstanceState == null)
         {
             selectItem(0);
@@ -65,7 +84,7 @@ public class AppActivity extends AppCompatActivity {
         {
             if(intent.getStringExtra(LOGIN_INFO) != null)
             {
-                logInfo.setText("You logged as: " + intent.getStringExtra(LOGIN_INFO));
+                logInfo.setText("  Hello, " + intent.getStringExtra(LOGIN_INFO) + "!\n  Tell us your idea : ");
             }
 
         }
@@ -84,6 +103,7 @@ public class AppActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        new myAsyncTask().execute();
     }
 
     @Override
@@ -106,19 +126,10 @@ public class AppActivity extends AppCompatActivity {
         switch(id){
             case R.id.newIdea:
                 //new frame with new idea creation form
-                Fragment fragment = new NewIdeaFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, fragment, "chosen");
-                ft.addToBackStack(null);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
-                if(drawerLayout.isDrawerOpen(drawerList))
-                {
-                    drawerLayout.closeDrawer(drawerList);
-                }
+                newIdeaCreator();
+
                 return true;
-            case R.id.action_settings:
-                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -139,7 +150,7 @@ public class AppActivity extends AppCompatActivity {
                 fragment = new AllIdeasFragment();
                 break;
             case 1:
-                fragment = new MyCabinetFragment();
+                fragment = MyCabinetFragment.newInstance(getIntent().getStringExtra(LOGIN_INFO));
                 break;
             case 2:
                 fragment = new SearchFragment();
@@ -155,7 +166,8 @@ public class AppActivity extends AppCompatActivity {
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
         setActionBarTitle(position);
-        drawerLayout.closeDrawer(drawerList);
+        if(drawerLayout.isDrawerOpen(drawerList)){
+        drawerLayout.closeDrawer(drawerList);}
     }
 
     private void setActionBarTitle(int position)
@@ -213,5 +225,69 @@ public class AppActivity extends AppCompatActivity {
     {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void newIdeaCreator()
+    {
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setTitle(getResources().getString(R.string.new_idea));
+        Fragment fragment = new NewIdeaFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, fragment, "chosen");
+        ft.addToBackStack(null);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+        if(drawerLayout.isDrawerOpen(drawerList))
+        {
+            drawerLayout.closeDrawer(drawerList);
+        }
+    }
+
+
+    //+onPostExecute; +change method
+    protected class myAsyncTask extends AsyncTask<Void, Void, String>
+    {
+        HttpURLConnection http;
+        BufferedReader buffer;
+        String json;
+        URL url;
+
+        @Override
+        protected void onPreExecute()
+        {
+            Log.d("Begin","AsyncTask");
+        }
+
+        @Override
+        protected String doInBackground(Void...params)
+        {
+
+            try {
+                url = new URL(oursite);
+
+                http= (HttpURLConnection)url.openConnection();
+                http.setRequestMethod("GET");
+                http.connect();
+
+                StringBuffer sbuffer = new StringBuffer();
+                buffer = new BufferedReader(new InputStreamReader(http.getInputStream()));
+
+                String line = "";
+
+                while (buffer.readLine() != null)
+                {
+                    line = buffer.readLine();
+                    sbuffer.append(line);
+                }
+
+                json = sbuffer.toString();
+
+            }catch(Exception e)
+            {
+                Log.e("Bad URL", "Check url");
+            }
+
+            return json;
+        }
     }
 }

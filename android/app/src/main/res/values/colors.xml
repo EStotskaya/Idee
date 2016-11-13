@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="BACK">#3FAE94</color>
-    <color name="BLACK">#3F3427</color>
+    <color name="BACK">#0C154E</color>
+    <color name="BLACK">#888888</color>
     <color name="LOGIN_BACK">#E9D7C4</color>
-    <color name="BROWN">#583104</color>
+    <color name="BROWN">#D3D7F0</color>
     <color name="DARKRED">#7C0606</color>
+    <color name="LIST">#565E92</color>
 </resources>

@@ -6,6 +6,11 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import butterknife.Bind;
 
 
 /**
@@ -13,17 +18,33 @@ import android.view.ViewGroup;
  */
 public class MyCabinetFragment extends Fragment {
 
+    @Bind(R.id.name) TextView name;
+    @Bind(R.id.profilePic) ImageView profilePic;
+    @Bind(R.id.changePic) Button changePic;
+
 
     public MyCabinetFragment() {
-        // Required empty public constructor
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_my_cabinet, container, false);
+
+
+    }
+
+    public static MyCabinetFragment newInstance(String name) {
+
+        Bundle args = new Bundle();
+
+        MyCabinetFragment fragment = new MyCabinetFragment();
+        args.putString("Name", name);
+        fragment.setArguments(args);
+        return fragment;
     }
 
 

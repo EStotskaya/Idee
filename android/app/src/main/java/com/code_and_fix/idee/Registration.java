@@ -1,5 +1,6 @@
 package com.code_and_fix.idee;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,8 +89,8 @@ public class Registration extends AppCompatActivity {
             Intent intent = new Intent(this, AppActivity.class);
             intent.putExtra(AppActivity.LOGIN_INFO, login.getText().toString());
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            finish();
             startActivity(intent);
+            finish();
 
         }
         else
