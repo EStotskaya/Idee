@@ -14,7 +14,7 @@
             android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/logo"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/main_icon"/>
 
         <TextView android:text="@string/idea_title"
             android:layout_width="wrap_content"

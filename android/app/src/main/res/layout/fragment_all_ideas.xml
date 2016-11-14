@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.code_and_fix.idee.AllIdeasFragment">
+    android:layout_height="match_parent" tools:context="com.code_and_fix.idee.AllIdeasFragment"
+    android:id="@+id/frame">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="All Ideas Fragment" />
+
 
 </FrameLayout>

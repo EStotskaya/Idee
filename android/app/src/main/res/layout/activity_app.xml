@@ -26,7 +26,7 @@
         android:textSize="20sp"
         android:textStyle="italic"
         android:clickable="true"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="sans-serif-thin"
         android:elevation="2dp"/>
 
     <ImageView
@@ -38,7 +38,8 @@
         android:id="@+id/profilePic"
         />
 
-    <FrameLayout android:id="@+id/mainFrame" 
+    <FrameLayout android:id="@+id/mainFrame"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/logInfo"

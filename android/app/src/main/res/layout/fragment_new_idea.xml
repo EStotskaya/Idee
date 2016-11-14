@@ -19,8 +19,9 @@
         android:inputType="textMultiLine"
         android:lines="5"
         android:maxLines="5"
-        android:background="@drawable/oldschool_border"
+        android:background="@drawable/large"
         android:elevation="2dp"
+        android:textStyle="italic"
         />
 
     <Button
@@ -33,6 +34,7 @@
         android:layout_below="@+id/ideaBody"
         android:layout_alignLeft="@+id/ideaBody"
         android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif-thin"
         />
 
    </RelativeLayout>
