@@ -67,7 +67,7 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
         ButterKnife.bind(this);
-        drawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_activated_1, getResources().getStringArray(R.array.categories)));
+        drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_item, getResources().getStringArray(R.array.categories)));
 
         if (savedInstanceState == null)
         {

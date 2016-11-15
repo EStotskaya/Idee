@@ -6,4 +6,7 @@
     <color name="BROWN">#D3D7F0</color>
     <color name="DARKRED">#7C0606</color>
     <color name="LIST">#565E92</color>
+    <color name="LIGHTBLUE">#E0EEF0</color>
+    <color name="WHITE">#FFFFFF</color>
+
 </resources>

@@ -53,9 +53,11 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:background="@color/LIST"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
-        android:textSize="20sp"
+        android:textSize="25sp"
+        android:textColor="@color/LIGHTBLUE"
+
         >
 
     </ListView>
