@@ -1,3 +1,13 @@
 extends layouts/layout.pug
 block content
-  h1 Main Page
+  .filters
+    button.filters-button Popular▼
+    button.filters-button Time▼
+  .share-idea
+    .container
+      .image-wrapper
+        img.share-idea-img(src='img/lamp.png')
+      p.share-idea-p Share the creative idea you've always want to develop
+      form.share-idea-form
+        textarea.share-idea-textarea(placeholder="Type you text..." rows=3)
+        button Share

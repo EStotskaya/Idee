@@ -9,6 +9,16 @@ body {
   outline: none;
 }
 
+body {
+  background-color: $body-background-color;
+  color: $text-color;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 .main-header {
   background-color: $header-background-color;
   display: flex;
@@ -68,5 +78,48 @@ body {
     margin-left: 20px;
     padding: 0 10px;
     outline: none;
+  }
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 60px;
+  border-bottom: 1px solid $border-color;
+  &-button {
+    border: none;
+    background-color: transparent;
+    color: $filters-color;
+    transition: color .3s ease;
+    outline: none;
+    &:hover {
+      cursor: pointer;
+      color: $text-color;
+    }
+  }
+}
+
+.share-idea {
+  text-align: center;
+  padding-top: 30px;
+  &-img {
+    width: 75px;
+    height: auto;
+  }
+  &-p {
+    @include inline-block-top;
+    max-width: 230px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  &-textarea {
+    border: 1px solid $border-color;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
   }
 }
