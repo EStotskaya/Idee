@@ -1,0 +1,18 @@
+- var navs = { index : 'Home', settings: 'Settings', about : 'About' }
+
+header.main-header
+  .main-header-left-side
+    a.main-header-logo-wrapper(href='index.html')
+      img(src='img/logo.png')
+    nav.main-header-nav
+      ul.main-header-ul
+        each item, path in navs
+          li.main-header-li(class=(path == currentPage) && 'active')
+            a.main-header-a(href='/' + path + '.html')=item
+  .main-header-right-side
+    ul.main-header-ul
+      li.main-header-li
+        a.main-header-a(href="#") Sign In
+      li.main-header-li
+        a.main-header-a(href="#") Sign Up
+    input.main-header-search-input(type="search" placeholder="Search")  

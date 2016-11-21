@@ -1,9 +1,72 @@
-.my-div {
-  color: $random-color;
-  background-color: $green-color; 
-  display: flex; 
-}  
+@mixin inline-block-top {
+  display: inline-block;
+  vertical-align: top;
+} 
 
-h1 {
-  color: red;
+html,
+body {
+  font-size: 14px;
+  outline: none;
+}
+
+.main-header {
+  background-color: $header-background-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  &-left-side,
+  &-right-side {
+    display: flex;
+    align-items: center;
+  }
+  &-logo-wrapper {
+    @include inline-block-top; 
+    padding: 0;
+    margin: 0 10px 0 5px;
+    img {
+      width: 68px;
+      height: auto;
+    }
+  }
+  &-nav {
+    @include inline-block-top;
+  }
+  &-ul {
+    padding: 0;
+    margin: 0;
+  }
+  &-li {
+    @include inline-block-top; 
+    &.active {
+      a {
+        color: #FFF;
+      }
+    }
+  }
+  &-a {
+    display: block; 
+    color: $header-link-color; 
+    text-decoration: none;
+    padding: 10px 5px;
+    transition: color .3s ease;
+    &:visited {
+      color: $header-link-color;
+    } 
+    &:hover,
+    &:focus {
+      color: #FFF;
+      text-decoration: none;
+    }
+  }
+  &-search-input {
+    height: 38px;
+    width: 176px;
+    border-radius: 10px;
+    border: none;
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 0 10px;
+    outline: none;
+  }
 }
