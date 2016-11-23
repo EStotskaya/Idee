@@ -1,6 +1,7 @@
 package com.code_and_fix.idee;
 
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -24,7 +26,7 @@ import butterknife.OnClick;
 public class NewIdeaFragment extends Fragment {
 
 
-
+    @Bind(R.id.relLay) RelativeLayout relLay;
     @Bind(R.id.submit) Button submit;
     @Bind(R.id.ideaBody) EditText ideaBody;
     @Bind(R.id.addTag) Button addTag;
@@ -32,6 +34,22 @@ public class NewIdeaFragment extends Fragment {
     @OnClick(R.id.submit) public void jsonClick(Button button)
     {
         submit();
+    }
+
+    @OnClick(R.id.addTag) public void addTag(Button butt)
+    {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, R.id.addTag);
+
+        EditText tag = new EditText(this.getActivity());
+        tag.setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);
+        tag.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
+        tag.setMaxLines(1);
+
+        relLay.addView(tag, params);
+
+
+
     }
 
 
@@ -44,8 +62,10 @@ public class NewIdeaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //change later
-        ButterKnife.bind(this.getActivity());
-        return inflater.inflate(R.layout.fragment_new_idea, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_new_idea, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     private JSONObject submit()
