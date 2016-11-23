@@ -123,3 +123,40 @@ body {
     margin-bottom: 10px;
   }
 }
+
+.ideas-block {
+  max-width: 1100px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.idea {
+  box-sizing: border-box;
+  background-color: #FFF;
+  width: 245px;
+  height: 350px;
+  padding: 20px;
+  margin: 10px;
+  &-header {
+    display: flex;
+    justify-content: flex-start;
+  }
+  &-avatar-wrapper {
+    margin-right: 10px;
+  }
+  &-avatar {
+    width: 45px;
+    height: auto;
+  }
+  &-name,
+  &-date {
+    margin: 0;
+    padding: 0;
+  }
+  &-image {
+    max-width: 100%;
+    height: auto;
+  }
+}
