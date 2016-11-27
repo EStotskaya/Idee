@@ -51,12 +51,25 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tagText"
+            android:layout_below="@+id/ideaText"
+            android:fontFamily="sans-serif-thin"
+            android:clickable="true"
+            android:textColor="@color/LIST"
+            android:textStyle="italic"
+            android:text="#kitties"
+            android:paddingLeft="10dp"
+            android:layout_marginTop="5dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:background="@color/BACK"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="2dp"
-            android:layout_below="@+id/ideaText"
+            android:layout_below="@+id/tagText"
             android:id="@+id/colorBar"/>
 
         <ImageView

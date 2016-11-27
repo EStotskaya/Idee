@@ -4,54 +4,55 @@
     android:background="@color/WHITE"
     >
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/relLay"
-       >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relLay"
+        >
 
-    <EditText android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:hint="@string/new_idea_body"
-        android:fontFamily="sans-serif-thin"
-        android:maxLength="100"
-        android:id="@+id/ideaBody"
-        android:elegantTextHeight="true"
-        android:singleLine="false"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:maxLines="5"
-        android:background="@drawable/plain_idea_frame"
-        android:elevation="2dp"
-        android:textStyle="italic"
-        />
+        <EditText android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="@string/new_idea_body"
+            android:paddingLeft="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:maxLength="100"
+            android:id="@+id/ideaBody"
+            android:elegantTextHeight="true"
+            android:singleLine="false"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:maxLines="5"
+            android:background="@drawable/plain_idea_frame"
+            android:elevation="2dp"
+            android:textStyle="italic"
+            />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_tag"
-        android:textColor="@color/BACK"
-        android:background="@android:color/transparent"
-        android:id="@+id/addTag"
-        android:layout_below="@+id/ideaBody"
-        android:layout_alignLeft="@+id/ideaBody"
-        android:layout_marginTop="10dp"
-        android:fontFamily="sans-serif-thin"
-        />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_tag"
+            android:textColor="@color/BACK"
+            android:background="@android:color/transparent"
+            android:id="@+id/addTag"
+            android:layout_below="@+id/ideaBody"
+            android:layout_alignLeft="@+id/ideaBody"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-thin"
+            />
 
-       <Button
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="@string/submit"
-           android:id="@+id/submit"
-           android:layout_marginBottom="87dp"
-           android:layout_alignParentBottom="true"
-           android:layout_centerHorizontal="true"
-           android:fontFamily="&quot;sans-serif-condensed&quot;"
-           android:textColor="@color/BACK"
-           android:textColorHighlight="@color/LIST"
-           android:textSize="25sp"
-           android:background="@android:color/transparent" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:id="@+id/submit"
+            android:layout_marginBottom="87dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="&quot;sans-serif-condensed&quot;"
+            android:textColor="@color/BACK"
+            android:textColorHighlight="@color/LIST"
+            android:textSize="25sp"
+            android:background="@android:color/transparent" />
 
-   </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>

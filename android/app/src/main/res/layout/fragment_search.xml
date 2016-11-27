@@ -3,8 +3,51 @@
     android:layout_height="match_parent" tools:context="com.code_and_fix.idee.SearchFragment"
     android:background="@color/WHITE">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Search Fragment" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="20sp"
+            android:textColor="@color/BACK"
+            android:id="@+id/searchText"
+            android:layout_marginTop="10dp"/>
 
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchTag"
+            android:layout_below="@+id/searchText"
+            android:hint="@string/search_hint"
+            android:fontFamily="sans-serif-thin"
+            android:textStyle="italic"
+            android:layout_marginTop="10dp"
+
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/start_search"
+            android:id="@+id/startSearch"
+            android:layout_below="@+id/searchTag"
+            android:textSize="25sp"
+            android:textColor="@color/LIST"
+            android:fontFamily="sans-serif-condensed"
+
+            />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startSearch"
+            android:layout_marginTop="5dp"
+            android:id="@+id/ideasList"
+            android:headerDividersEnabled="false"
+            android:footerDividersEnabled="true">
+
+        </ListView>
+
+    </RelativeLayout>
 </FrameLayout>
