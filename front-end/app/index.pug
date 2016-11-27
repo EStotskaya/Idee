@@ -3,6 +3,7 @@ block content
   .filters
     button.filters-button Popular▼
     button.filters-button Time▼
+  
   .share-idea
     .container
       .image-wrapper
@@ -10,19 +11,36 @@ block content
       p.share-idea-p Share the creative idea you've always want to develop
       form.share-idea-form
         textarea.share-idea-textarea(placeholder="Type you text..." rows=3)
-        button Share
-  .ideas-block  
-    //
-      .idea
-        .idea-header
-          .idea-avatar-wrapper
-            img(src="img/lamp.png").idea-avatar
-          .idea-information-wrapper
-            p.idea-name Mira Koval
-            p.idea-date 16.10.2016|10:45
-        .idea-body
-          .idea-link
-            a(href="#") http://bla-bla-bla
-          .idea-text bla-bla-bla
-          img(src="img/lamp.png").idea-image    
+        button Share     
+  
+  .ideas-block
+    //.idea(data-idea-id='1')
+      .idea-header
+        .idea-avatar-wrapper
+          img(src="img/lamp.png").idea-avatar
+        .idea-information-wrapper
+          p.idea-name Mira Koval
+          p.idea-date 16.10.2016|10:45
+      .idea-body
+        .idea-link
+          a(href="#") http://bla-bla-bla
+        .idea-text bla-bla-bla
+        img(src="img/lamp.png").idea-image   
+  
+  .comments-block
+  //
+    .comment-block#comment-for-
+      .comment-modal
+        .comment-content-wrapper
+          .comment-wrapper
+            .comment-date 12
+            .comment-text text
+          .comment-wrapper
+            .comment-date 12
+            .comment-text text
+          .comment-form
+            input.comment-input(type="text" placeholder="name")
+            textarea.comment-textarea(placeholder="Type you text..." rows=3)
+            button.comment-button Submit
+      
       

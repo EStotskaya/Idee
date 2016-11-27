@@ -139,6 +139,9 @@ body {
   height: 350px;
   padding: 20px;
   margin: 10px;
+  &:hover {
+    cursor: pointer;
+  }
   &-header {
     display: flex;
     justify-content: flex-start;
@@ -158,5 +161,36 @@ body {
   &-image {
     max-width: 100%;
     height: auto;
+  }
+}
+
+.comment {
+  &-block {
+    display: none;
+  }
+  &-content-wrapper {
+    background-color: #FFF;
+    box-sizing: border-box;
+    padding: 15px;
+    min-width: 290px;
+    z-index: 100;
+  }
+  &-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(#000, .6);
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  &-input,
+  &-textarea {
+    box-sizing: border-box;
+    width: 100%;
   }
 }
