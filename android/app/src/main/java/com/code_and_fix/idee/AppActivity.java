@@ -142,7 +142,7 @@ public class AppActivity extends AppCompatActivity {
     private void selectItem(int position)
     {
         currentPosition = position;
-        Toast.makeText(this, "Chosen position: " + position, Toast.LENGTH_LONG).show();
+
         Fragment fragment;
         switch(currentPosition)
         {
@@ -183,7 +183,7 @@ public class AppActivity extends AppCompatActivity {
             title = getResources().getString(R.string.app_name);
         }
 
-        Toast.makeText(this, title, Toast.LENGTH_LONG).show();
+
 
         try {
             assert getSupportActionBar() != null;

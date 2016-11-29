@@ -44,6 +44,8 @@ public class NewIdeaFragment extends Fragment {
     @Bind(R.id.ideaBody) EditText ideaBody;
     @Bind(R.id.addTag) Button addTag;
 
+    private boolean tagWasClicked;
+
     @OnClick(R.id.submit) public void jsonClick(Button button)
     {
         submit();
@@ -51,21 +53,9 @@ public class NewIdeaFragment extends Fragment {
 
     @OnClick(R.id.addTag) public void addTag(Button butt)
     {
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, R.id.addTag);
-
-        EditText tag = new EditText(this.getActivity());
-        tag.setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);
-        tag.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
-        tag.setMaxLines(1);
-        tag.setHint("#add_your_tag");
-        tag.setId(R.id.tag);
-
-        relLay.addView(tag, params);
+        addTag();
         butt.setVisibility(View.GONE);
-
-
-
+        tagWasClicked = true;
     }
 
 
@@ -83,6 +73,8 @@ public class NewIdeaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_idea, container, false);
         ButterKnife.bind(this, view);
 
+
+
         try
         {
             SQLiteOpenHelper baseHelper = new BaseHelper(getActivity());
@@ -91,6 +83,17 @@ public class NewIdeaFragment extends Fragment {
             if(cursor.moveToLast())
             {
                 ideaBody.setText(cursor.getString(0));
+
+                try{
+                    if(getView().findViewById(R.id.tag) != null)
+                    {
+                        EditText tag = (EditText) getView().findViewById(R.id.tag);
+                        tag.setText(cursor.getString(1));
+                    }
+                }catch(NullPointerException e)
+                {
+                    System.out.println(e);
+                }
                 db.delete("saved_ideas", null, null);
             }
             cursor.close();
@@ -111,25 +114,40 @@ public class NewIdeaFragment extends Fragment {
         {
             try
             {
-
+                String s = "Saved idea: ";
                 SQLiteOpenHelper baseHelper = new BaseHelper(getActivity());
                 SQLiteDatabase db = baseHelper.getWritableDatabase();
                 ContentValues cv = new ContentValues();
                 cv.put("name", AppActivity.LOGIN_INFO);
                 cv.put("idea", ideaBody.getText().toString());
-                if(getView().findViewById(R.id.tag) != null)
+                s += " ' " + ideaBody.getText().toString() + " ' ";
+                try
                 {
-                    EditText tag = (EditText)getView().findViewById(R.id.tag);
-                    cv.put("tag", tag.getText().toString());
+                    if(getView().findViewById(R.id.tag) != null)
+                    {
+                        EditText tag = (EditText)getView().findViewById(R.id.tag);
+                        cv.put("tag", tag.getText().toString());
+                        s += ", tag: ' " + tag.getText().toString() + " ' ";
+                    }
+                }catch(NullPointerException e)
+                {
+                    System.out.println(e);
                 }
                 db.insert("saved_ideas", null, cv);
+
+                Toast.makeText(getActivity(), "No internet connection \n" + s, Toast.LENGTH_LONG).show();
             }
             catch(SQLiteException e)
             {
                 Toast.makeText(getActivity(), "Can't write to DB", Toast.LENGTH_LONG).show();
             }
         }
+
+
+        Bundle b = new Bundle();
+        onSaveInstanceState(b);
     }
+
 
     private JSONObject submit()
     {
@@ -175,6 +193,30 @@ public class NewIdeaFragment extends Fragment {
         NetworkInfo nf = cm.getActiveNetworkInfo();
         return nf != null && nf.isConnectedOrConnecting();
     }
+
+    private void addTag()
+    {
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, R.id.addTag);
+
+        EditText tag = new EditText(this.getActivity());
+        tag.setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);
+        tag.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
+        tag.setMaxLines(1);
+        tag.setHint("#add_your_tag");
+        tag.setId(R.id.tag);
+
+        relLay.addView(tag, params);
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle)
+    {
+        super.onSaveInstanceState(bundle);
+        bundle.putBoolean("tag", tagWasClicked);
+    }
+
 
 
 }

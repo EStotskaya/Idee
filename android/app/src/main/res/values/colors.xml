@@ -8,5 +8,6 @@
     <color name="LIST">#565E92</color>
     <color name="LIGHTBLUE">#E0EEF0</color>
     <color name="WHITE">#FFFFFF</color>
+    <color name="BACKGR">#1B46A4</color>
 
 </resources>

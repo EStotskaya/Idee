@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -55,6 +58,7 @@ public class IdeeAdapter extends ArrayAdapter
         @Bind(R.id.like) ImageView like;
         @Bind(R.id.dislike) ImageView dislike;
         @Bind(R.id.rate) TextView rate;
+        @Bind(R.id.tagText) TextView tagText;
 
         Entry(View v)
         {
@@ -76,6 +80,28 @@ public class IdeeAdapter extends ArrayAdapter
         else
         {
             cell = (Entry)convertView.getTag();
+        }
+
+
+        cell.rate.setText(0);
+        try {
+            Date dt = new Date(_entries.get(position).getString("timestamp"));
+            cell.username.setText(_entries.get(position).getString("name"));
+            cell.time.setText(dt.toString());
+            cell.ideaText.setText(_entries.get(position).getString("idea"));
+            try {
+                cell.tagText.setText(_entries.get(position).getString("tag"));
+            }catch(NullPointerException e)
+            {
+                System.out.println("No tag at " + position);
+            }
+            if(_entries.get(position).getInt("rate") != 0)
+            {
+                cell.rate.setText(_entries.get(position).getInt("rate"));
+            }
+        }catch(JSONException e)
+        {
+            System.out.print("Something went wrong");
         }
 
         return convertView;
