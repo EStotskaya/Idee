@@ -35,6 +35,7 @@
             android:textSize="25sp"
             android:textColor="@color/LIST"
             android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="15dp"
 
             />
 

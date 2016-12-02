@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,12 +51,26 @@ public class AppActivity extends AppCompatActivity {
     @Bind(R.id.drawer) ListView drawerList;
     @Bind(R.id.logInfo) TextView logInfo;
     @Bind(R.id.profilePic) ImageView profilePic;
+    @Bind(R.id.mainFrame) FrameLayout frame;
+    @Bind(R.id.panel) LinearLayout panel;
+    @Bind(R.id.relative) RelativeLayout relL;
+
 
     ArrayList<String> titles;
 
     @OnItemClick(R.id.drawer) public void selectCategory(AdapterView<?> adapter, View view, int position, long id )
     {
         selectItem(position);
+    }
+
+    @OnClick(R.id.relative) void showBar(RelativeLayout frame)
+    {
+          if (panel.getVisibility() == View.VISIBLE) {
+                 panel.setVisibility(View.GONE);
+              } else if (panel.getVisibility() == View.GONE) {
+                 panel.setVisibility(View.VISIBLE);
+             }
+
     }
 
     @OnClick(R.id.logInfo) public void newIdeaCreator(View view)
@@ -102,6 +120,7 @@ public class AppActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(drawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        panel.setVisibility(View.VISIBLE);
 
         new myAsyncTask().execute();
     }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.Bind;
@@ -18,6 +19,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sPref;
+    Fonts fonts = new Fonts(this);
 
     @Bind(R.id.editLogin)
     EditText editLogin;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     Button backButt;
     @Bind(R.id.signToApp)
     Button signToApp;
+    @Bind(R.id.text)
+    TextView appName;
 
     @OnClick(R.id.signIn)
     void showEditText(Button butt) {
@@ -88,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ButterKnife.bind(this);
+        appName.setTypeface(fonts.lobster());
+        signIn.setTypeface(fonts.caviarBold());
+        signUp.setTypeface(fonts.caviarBold());
+        anonymous.setTypeface(fonts.caviarBold());
+        backButt.setTypeface(fonts.caviarBold());
+        signToApp.setTypeface(fonts.caviarBold());
+        editLogin.setTypeface(fonts.caviarNorm());
+        editPass.setTypeface(fonts.caviarNorm());
 
 
         {

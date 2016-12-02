@@ -43,6 +43,7 @@ public class NewIdeaFragment extends Fragment {
     @Bind(R.id.submit) Button submit;
     @Bind(R.id.ideaBody) EditText ideaBody;
     @Bind(R.id.addTag) Button addTag;
+    Fonts fonts;
 
     private boolean tagWasClicked;
 
@@ -72,6 +73,9 @@ public class NewIdeaFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_new_idea, container, false);
         ButterKnife.bind(this, view);
+        fonts = new Fonts(getActivity());
+        submit.setTypeface(fonts.caviarBold());
+        addTag.setTypeface(fonts.caviarNorm());
 
 
 
@@ -205,6 +209,7 @@ public class NewIdeaFragment extends Fragment {
         tag.setMaxLines(1);
         tag.setHint("#add_your_tag");
         tag.setId(R.id.tag);
+        tag.setTypeface(fonts.caviarNorm());
 
         relLay.addView(tag, params);
 

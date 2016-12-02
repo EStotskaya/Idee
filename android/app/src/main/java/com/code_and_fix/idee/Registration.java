@@ -8,10 +8,13 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.Bind;
@@ -24,12 +27,18 @@ public class Registration extends AppCompatActivity {
     @Bind(R.id.passEdit) EditText pass;
     @Bind(R.id.backButt) Button backButt;
     @Bind(R.id.register) Button regButt;
+    @Bind(R.id.regText) TextView regText;
+    @Bind(R.id.loginText) TextView loginText;
+    @Bind(R.id.passText) TextView passText;
     SharedPreferences sp;
+    Fonts fonts;
 
     @OnClick(R.id.backButt) public void back(Button butt)
     {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //View view = ((LayoutInflater)getLayoutInflater()).inflate(R.layout.dialog, null);
+        //builder.setView(view);
         builder.setMessage(getString(R.string.regMess));
         builder.setPositiveButton(getString(R.string.da), new DialogInterface.OnClickListener() {
             @Override
@@ -106,6 +115,16 @@ public class Registration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         ButterKnife.bind(this);
+        fonts = new Fonts(this);
+        regText.setTypeface(fonts.lobster());
+        backButt.setTypeface(fonts.caviarBold());
+        regButt.setTypeface(fonts.caviarBold());
+        loginText.setTypeface(fonts.caviarBold());
+        passText.setTypeface(fonts.caviarBold());
+        login.setTypeface(fonts.caviarNorm());
+        pass.setTypeface(fonts.caviarNorm());
+
+
 
         sp=getSharedPreferences("regInfo", MODE_PRIVATE);
         login.setText(sp.getString("Saved login", ""));

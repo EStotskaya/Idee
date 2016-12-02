@@ -4,54 +4,77 @@
 
     tools:context="com.code_and_fix.idee.AppActivity"
     android:id="@+id/drawerLayout">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relative">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/panel"
+        android:background="@color/black_overlay"
+        android:elevation="5dp">
+
+
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_weight="4"
+
+        android:id="@+id/logInfo"
+
+        android:background="@color/WHITE"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:clickable="true"
+        android:fontFamily="sans-serif-thin"
+        />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:src="@drawable/profile_pictures"
+        android:layout_gravity="center"
+        android:id="@+id/profilePic"
+        />
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/BACK"
-        android:id="@+id/colorBar"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/BACK"
+            android:id="@+id/colorBar"/>
 
-        />
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="55dp"
-        android:id="@+id/logInfo"
-        android:layout_below="@+id/colorBar"
-        android:background="@drawable/text"
-        android:gravity="start"
-        android:textSize="20sp"
-        android:textStyle="italic"
-        android:clickable="true"
-        android:fontFamily="sans-serif-thin"
-        android:elevation="2dp"/>
 
-    <ImageView
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_toRightOf="@+id/logInfo"
-        android:src="@drawable/profile_pictures"
-        android:layout_below="@+id/colorBar"
-        android:id="@+id/profilePic"
-        />
-
-    <FrameLayout android:id="@+id/mainFrame"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/logInfo"
+        <FrameLayout android:id="@+id/mainFrame"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/colorBar"
         />
 
     </RelativeLayout>
+</RelativeLayout>
+
     
     <ListView
         android:id="@+id/drawer"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
+        android:dividerHeight="20dp"
         android:background="@color/LIST"
         android:layout_width="250dp"
         android:layout_height="match_parent"

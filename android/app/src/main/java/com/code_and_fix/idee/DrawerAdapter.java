@@ -21,6 +21,7 @@ public class DrawerAdapter extends ArrayAdapter<String> {
     private int _resource;
     public String[] _list;
 
+
     public DrawerAdapter(Context context, int resource, String[] list)
     {
         super(context, resource, list);
@@ -50,6 +51,7 @@ public class DrawerAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        Fonts fonts = new Fonts(_context);
         CellHolder cell;
 
         if(convertView == null)
@@ -66,6 +68,7 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         cell.text.setTextColor(_context.getResources().getColor(R.color.LIGHTBLUE));
         cell.text.setTextSize(25);
         cell.text.setText(_list[position]);
+        cell.text.setTypeface(fonts.caviarBold());
 
         return convertView;
     }

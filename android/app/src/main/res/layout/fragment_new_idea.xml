@@ -22,10 +22,19 @@
             android:inputType="textMultiLine"
             android:lines="5"
             android:maxLines="5"
-            android:background="@drawable/plain_idea_frame"
             android:elevation="2dp"
             android:textStyle="italic"
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:id="@+id/colorLine"
+            android:layout_below="@+id/ideaBody"
+            android:background="@color/BACK"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -34,7 +43,7 @@
             android:textColor="@color/BACK"
             android:background="@android:color/transparent"
             android:id="@+id/addTag"
-            android:layout_below="@+id/ideaBody"
+            android:layout_below="@+id/colorLine"
             android:layout_alignLeft="@+id/ideaBody"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-thin"
