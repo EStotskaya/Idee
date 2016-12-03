@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -55,7 +61,7 @@ public class AppActivity extends AppCompatActivity {
     @Bind(R.id.panel) LinearLayout panel;
     @Bind(R.id.relative) RelativeLayout relL;
 
-
+    SharedPreferences spref;
     ArrayList<String> titles;
 
     @OnItemClick(R.id.drawer) public void selectCategory(AdapterView<?> adapter, View view, int position, long id )
@@ -120,6 +126,19 @@ public class AppActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(drawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+
+        spref = getSharedPreferences("accInfo", MODE_PRIVATE);
+        String imagename = spref.getString("image", "");
+        if(imagename.length()>0)
+        {
+            ImageLoader loader = ImageLoader.getInstance();
+            ImageSize target = new ImageSize(55, 55);
+            loader.displayImage(imagename, profilePic, target);
+        }
+
         panel.setVisibility(View.VISIBLE);
 
         new myAsyncTask().execute();
