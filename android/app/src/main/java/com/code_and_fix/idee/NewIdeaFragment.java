@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -42,6 +43,7 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -56,8 +58,10 @@ public class NewIdeaFragment extends Fragment {
     @Bind(R.id.addTag) Button addTag;
     @Bind(R.id.makePic) Button makePic;
     @Bind(R.id.imageFrame) ImageView imageFrame;
+    @Bind(R.id.takePic) Button takePic;
     Fonts fonts;
     private final int CAMERA_RESULT = 1;
+    private final int GALLERY_RESULT = 2;
 
     private boolean tagWasClicked;
 
@@ -77,19 +81,16 @@ public class NewIdeaFragment extends Fragment {
     @OnClick(R.id.makePic) void makePhoto(Button butt)
     {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Idee/");
-        if(!file.exists())
-        {
-            file.mkdir();
-        }
-        if(file.isDirectory())
-        {
-            Toast.makeText(getActivity(), "Dir created", Toast.LENGTH_LONG).show();
-        }
-        File filePath = new File(Environment.getExternalStorageDirectory().getPath() + "/Idee/" + System.currentTimeMillis()+".jpg");
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+
         startActivityForResult(cameraIntent, CAMERA_RESULT);
-     }
+    }
+
+    @OnClick(R.id.takePic) void openGallery(Button button)
+    {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, GALLERY_RESULT);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -98,7 +99,6 @@ public class NewIdeaFragment extends Fragment {
         {
             if(resultCode == RESULT_OK) {
 
-                //and also something is wrong here
                 try {
                     if(intent!=null) {
                         Bitmap image = (Bitmap) intent.getExtras().get("data");
@@ -115,6 +115,33 @@ public class NewIdeaFragment extends Fragment {
 
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "Can't get photo", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        else if(requestCode == GALLERY_RESULT)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                if(intent != null)
+                {
+                try
+                {
+                    final Uri imageUri = intent.getData();
+                    String imageName = imageUri.toString();
+
+
+                    ImageLoader loader = ImageLoader.getInstance();
+                    ImageSize target = new ImageSize(200, 200);
+                    imageFrame.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    imageFrame.setVisibility(View.VISIBLE);
+                    loader.displayImage(imageName, imageFrame, target);
+
+
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getActivity(), "Can't load image", Toast.LENGTH_LONG).show();
+                }
                 }
             }
         }
@@ -138,8 +165,9 @@ public class NewIdeaFragment extends Fragment {
         submit.setTypeface(fonts.caviarBold());
         addTag.setTypeface(fonts.caviarNorm());
         makePic.setTypeface(fonts.caviarNorm());
+        takePic.setTypeface(fonts.caviarNorm());
 
-        galleryAdd();
+
 
 
         try
@@ -264,7 +292,8 @@ public class NewIdeaFragment extends Fragment {
     private void addTag()
     {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, R.id.addTag);
+        params.addRule(RelativeLayout.BELOW, R.id.ideaBody);
+        params.setMargins(5, 5, 0, 5);
 
         EditText tag = new EditText(this.getActivity());
         tag.setHeight(RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -276,6 +305,20 @@ public class NewIdeaFragment extends Fragment {
 
         relLay.addView(tag, params);
 
+
+        RelativeLayout.LayoutParams makePicParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        makePicParams.addRule(RelativeLayout.BELOW, R.id.tag);
+        makePicParams.setMargins(7, 5, 0, 0);
+        makePic.setLayoutParams(makePicParams);
+
+        RelativeLayout.LayoutParams takePicParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        takePicParams.addRule(RelativeLayout.BELOW, R.id.tag);
+        takePicParams.setMargins(5, 5, 0, 5);
+        takePicParams.addRule(RelativeLayout.ALIGN_RIGHT, R.id.ideaBody);
+        takePic.setLayoutParams(takePicParams);
+
+
+
     }
 
     @Override
@@ -285,13 +328,6 @@ public class NewIdeaFragment extends Fragment {
         bundle.putBoolean("tag", tagWasClicked);
     }
 
-    private void galleryAdd()
-    {
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/Idee/");
-        Uri uri = Uri.fromFile(file);
-        intent.setData(uri);
-        getActivity().sendBroadcast(intent);
-    }
+
 
 }

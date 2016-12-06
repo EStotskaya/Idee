@@ -64,9 +64,23 @@
             android:fontFamily="sans-serif-thin"
             />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_pic"
+            android:textColor="@color/BACK"
+            android:background="@android:color/transparent"
+            android:id="@+id/takePic"
+            android:layout_below="@+id/addTag"
+            android:layout_alignRight="@+id/ideaBody"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-thin"
+            />
+
         <ImageView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/imageFrame"
             android:layout_below="@+id/makePic"
@@ -78,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="@string/submit"
             android:id="@+id/submit"
-            android:layout_marginBottom="87dp"
+            android:layout_marginBottom="67dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:fontFamily="&quot;sans-serif-condensed&quot;"

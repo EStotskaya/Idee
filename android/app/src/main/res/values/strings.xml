@@ -36,6 +36,7 @@
     <string name="new_idea_body">Enter your idea here!</string>
     <string name="add_tag">Add tag...</string>
     <string name="add_pic">Make a photo...</string>
+    <string name="pick_pic">Open gallery..</string>
 
     <string name="my_cab_info">My cabinet</string>
     <string name="my_ideas">My ideas : </string>
