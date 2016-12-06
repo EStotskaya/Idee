@@ -4,20 +4,26 @@ package com.code_and_fix.idee;
 import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -29,8 +35,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 
+import java.io.File;
 
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -43,7 +54,10 @@ public class NewIdeaFragment extends Fragment {
     @Bind(R.id.submit) Button submit;
     @Bind(R.id.ideaBody) EditText ideaBody;
     @Bind(R.id.addTag) Button addTag;
+    @Bind(R.id.makePic) Button makePic;
+    @Bind(R.id.imageFrame) ImageView imageFrame;
     Fonts fonts;
+    private final int CAMERA_RESULT = 1;
 
     private boolean tagWasClicked;
 
@@ -57,6 +71,53 @@ public class NewIdeaFragment extends Fragment {
         addTag();
         butt.setVisibility(View.GONE);
         tagWasClicked = true;
+    }
+
+    //something is wrong here
+    @OnClick(R.id.makePic) void makePhoto(Button butt)
+    {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = new File(Environment.getExternalStorageDirectory().getPath() + "/Idee/");
+        if(!file.exists())
+        {
+            file.mkdir();
+        }
+        if(file.isDirectory())
+        {
+            Toast.makeText(getActivity(), "Dir created", Toast.LENGTH_LONG).show();
+        }
+        File filePath = new File(Environment.getExternalStorageDirectory().getPath() + "/Idee/" + System.currentTimeMillis()+".jpg");
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        startActivityForResult(cameraIntent, CAMERA_RESULT);
+     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        if(requestCode == CAMERA_RESULT)
+        {
+            if(resultCode == RESULT_OK) {
+
+                //and also something is wrong here
+                try {
+                    if(intent!=null) {
+                        Bitmap image = (Bitmap) intent.getExtras().get("data");
+                        if(image!= null)
+                        {
+                            imageFrame.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            imageFrame.setVisibility(View.VISIBLE);
+                            imageFrame.setImageBitmap(image);
+
+                        }
+                    }else{
+                        Toast.makeText(getActivity(), "Intent is null", Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Can't get photo", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
 
@@ -76,7 +137,9 @@ public class NewIdeaFragment extends Fragment {
         fonts = new Fonts(getActivity());
         submit.setTypeface(fonts.caviarBold());
         addTag.setTypeface(fonts.caviarNorm());
+        makePic.setTypeface(fonts.caviarNorm());
 
+        galleryAdd();
 
 
         try
@@ -222,6 +285,13 @@ public class NewIdeaFragment extends Fragment {
         bundle.putBoolean("tag", tagWasClicked);
     }
 
-
+    private void galleryAdd()
+    {
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/Idee/");
+        Uri uri = Uri.fromFile(file);
+        intent.setData(uri);
+        getActivity().sendBroadcast(intent);
+    }
 
 }

@@ -49,6 +49,30 @@
             android:fontFamily="sans-serif-thin"
             />
 
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_pic"
+            android:textColor="@color/BACK"
+            android:background="@android:color/transparent"
+            android:id="@+id/makePic"
+            android:layout_below="@+id/addTag"
+            android:layout_alignLeft="@+id/ideaBody"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-thin"
+            />
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageFrame"
+            android:layout_below="@+id/makePic"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

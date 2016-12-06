@@ -130,20 +130,21 @@ public class AppActivity extends AppCompatActivity {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
-        spref = getSharedPreferences("accInfo", MODE_PRIVATE);
-        String imagename = spref.getString("image", "");
-        if(imagename.length()>0)
-        {
-            ImageLoader loader = ImageLoader.getInstance();
-            ImageSize target = new ImageSize(55, 55);
-            loader.displayImage(imagename, profilePic, target);
-        }
+
+        getSPref();
 
         panel.setVisibility(View.VISIBLE);
 
         new myAsyncTask().execute();
     }
 
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        getSPref();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -326,6 +327,19 @@ public class AppActivity extends AppCompatActivity {
             }
 
             return json;
+        }
+    }
+
+    void getSPref()
+    {
+        spref = getSharedPreferences("accInfo", MODE_PRIVATE);
+        String imagename = spref.getString("image", "");
+
+        if(imagename.length()>0)
+        {
+            ImageLoader loader = ImageLoader.getInstance();
+            ImageSize target = new ImageSize(55, 55);
+            loader.displayImage(imagename, profilePic, target);
         }
     }
 }
