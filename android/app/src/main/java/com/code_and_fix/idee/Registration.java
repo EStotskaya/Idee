@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -32,6 +34,7 @@ public class Registration extends AppCompatActivity {
     @Bind(R.id.passText) TextView passText;
     SharedPreferences sp;
     Fonts fonts;
+    Pattern p = Pattern.compile("^[a-zA-Z0-9]{3,11}$");
 
     @OnClick(R.id.backButt) public void back(Button butt)
     {
@@ -132,12 +135,12 @@ public class Registration extends AppCompatActivity {
     }
 
 
-    //better add regEx
+
     String check()
     {
         String mess = "";
 
-        if(!((login.getText().toString() != null)&&(login.getText().toString().length()>3)&&(login.getText().toString().length()<11)))
+        if(!((login.getText().toString() != null)&&(p.matcher(login.getText().toString()).matches())))
             mess += "Invalid login\n";
 
         if(!((pass.getText().toString()!=null)&&(pass.getText().toString().length()>3)&&(pass.getText().toString().length()<11)))

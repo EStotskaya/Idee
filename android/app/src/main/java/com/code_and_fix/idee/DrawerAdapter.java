@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,14 +21,16 @@ public class DrawerAdapter extends ArrayAdapter<String> {
     private Context _context;
     private int _resource;
     public String[] _list;
+    public int[] _images;
 
 
-    public DrawerAdapter(Context context, int resource, String[] list)
+    public DrawerAdapter(Context context, int resource, String[] list, int[] images)
     {
         super(context, resource, list);
         _context = context;
         _resource = resource;
         _list = list;
+        _images = images;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class DrawerAdapter extends ArrayAdapter<String> {
     public class CellHolder
     {
         @Bind(R.id.textView) TextView text;
+        @Bind(R.id.imageView) ImageView image;
         CellHolder(View v) {ButterKnife.bind(this, v);}
     }
 
@@ -69,6 +73,7 @@ public class DrawerAdapter extends ArrayAdapter<String> {
         cell.text.setTextSize(25);
         cell.text.setText(_list[position]);
         cell.text.setTypeface(fonts.caviarBold());
+        cell.image.setImageResource(_images[position]);
 
         return convertView;
     }

@@ -33,7 +33,7 @@
             android:id="@+id/startSearch"
             android:layout_below="@+id/searchTag"
             android:textSize="25sp"
-            android:textColor="@color/LIST"
+            android:textColor="@color/DARKRED"
             android:fontFamily="sans-serif-condensed"
             android:layout_marginTop="15dp"
 

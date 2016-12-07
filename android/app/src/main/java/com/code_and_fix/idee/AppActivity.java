@@ -63,6 +63,7 @@ public class AppActivity extends AppCompatActivity {
 
     SharedPreferences spref;
     ArrayList<String> titles;
+    int[] imagesArr = new int[]{R.drawable.main_icon, R.drawable.profile_pictures, R.drawable.search};
 
     @OnItemClick(R.id.drawer) public void selectCategory(AdapterView<?> adapter, View view, int position, long id )
     {
@@ -91,7 +92,7 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
         ButterKnife.bind(this);
-        drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_item, getResources().getStringArray(R.array.categories)));
+        drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_item, getResources().getStringArray(R.array.categories), imagesArr));
 
         if (savedInstanceState == null)
         {
