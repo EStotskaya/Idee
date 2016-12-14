@@ -5,29 +5,24 @@
  */
 package darkside_itschool2016;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
 
 /**
  *
  * @author Neo
  */
 public class Comment {
-    private final int user_id;
-    private final int idea_id;
+    protected final int user_id;
+    protected final int idea_id;
     
-    private String text;
-    private Timestamp timestamp;
-    private List<Tag> tags;
+    protected String text;
+    protected Timestamp timestamp;
     
     public Comment(int user_id, int idea_id){
         this.user_id = user_id;
         this.idea_id = idea_id;
-    }
-
-    public void setTags(ArrayList<Tag> tags){
-        this.tags = new ArrayList<Tag>(tags);
     }
 
     public String getText() {
@@ -43,6 +38,25 @@ public class Comment {
     }
 
     public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+        this.timestamp = (Timestamp)timestamp.clone();
+    }
+    
+    public int getUser_id(){
+        return user_id;
+    }
+    
+    public int getIdea_id(){
+        return idea_id;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Comment: {user: ");sb.append(user_id);
+        sb.append(", idea: ");        sb.append(idea_id);
+        sb.append(", timestamp: ");   sb.append(timestamp);
+        sb.append(", text: ");        sb.append(text);
+        sb.append("}");
+        return sb.toString();
     }
 }

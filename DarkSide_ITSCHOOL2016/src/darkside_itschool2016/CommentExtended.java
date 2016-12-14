@@ -18,4 +18,18 @@ public class CommentExtended extends Comment{
         this.id = id;
         this.author_name = author;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Comment ");        sb.append(id);
+        sb.append(": {user: ");       sb.append(user_id);
+        sb.append(", username: ");    sb.append(author_name);       
+        sb.append(", idea: ");        sb.append(idea_id);
+        sb.append(", timestamp: ");   sb.append(timestamp);
+        sb.append(", text: ");        sb.append(text);
+        sb.append("}");
+        return sb.toString();
+    }
+
 }

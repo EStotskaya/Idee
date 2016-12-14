@@ -6,18 +6,21 @@
 package darkside_itschool2016;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Neo
  */
 public class Idea {
-    private final int user_id;
+    protected final int user_id;
     
-    private String link;
-    private String text;
-    private byte[] file;
-    private Timestamp timestamp;
+    protected String link;
+    protected String text;
+    protected byte[] file;
+    protected Timestamp timestamp;
+    protected List<Tag> tags;
 
     public Idea(int user_id){
         this.user_id = user_id;
@@ -29,6 +32,11 @@ public class Idea {
         this.text = text;
         this.file = file;
     }
+    
+    public void setTags(List<Tag> tags){
+        this.tags = new ArrayList<Tag>(tags);
+    }
+
 
     public String getLink() {
         return link;
@@ -65,4 +73,18 @@ public class Idea {
         this.timestamp = timestamp;
         return this;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Idea: {user: ");sb.append(user_id);
+        sb.append(", timestamp: ");   sb.append(timestamp);
+        sb.append(", tags: ");        sb.append(tags.toString());
+        sb.append(", text: ");        sb.append(text);
+        sb.append(", link: ");        sb.append(link);
+        sb.append(", file: ");        sb.append(file);
+        sb.append("}");
+        return sb.toString();
+    }
+    
 }

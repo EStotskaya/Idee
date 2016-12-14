@@ -5,6 +5,8 @@
  */
 package darkside_itschool2016;
 
+import java.io.IOException;
+
 /**
  *
  * @author Neo
@@ -27,62 +29,62 @@ public class DataManager implements DBManager, InternetManager{
     }
 
     @Override
-    public CommentExtended readComment() {
-        return database.readComment();
+    public CommentExtended readComment(int id) {
+        return database.readComment(id);
     }
 
     @Override
-    public IdeaExtended readIdea() {
-        return database.readIdea();
+    public IdeaExtended readIdea(int id) {
+        return database.readIdea(id);
     }
 
     @Override
-    public void writeComment(Comment c) {
-        database.writeComment(c);
+    public int writeComment(Comment c) {
+        return database.writeComment(c);
     }
 
     @Override
-    public void writeIdea(Idea i) {
-        database.writeIdea(i);
+    public int writeIdea(Idea i) {
+        return database.writeIdea(i);
     }
 
     @Override
-    public void updateComment(Comment c, int id) {
-        database.updateComment(c, id);
+    public int updateComment(Comment c, int id) {
+        return database.updateComment(c, id);
     }
 
     @Override
-    public void updateIdea(Idea i, int id) {
-        database.updateIdea(i, id);
+    public int updateIdea(Idea i, int id) {
+        return database.updateIdea(i, id);
     }
 
     @Override
-    public Comment extractComment(String json) {
+    public Comment extractComment(String json) throws IOException{
         return internet.extractComment(json);
     }
 
     @Override
-    public Idea extractIdea(String json) {
+    public Idea extractIdea(String json) throws IOException{
         return internet.extractIdea(json);
     }
 
     @Override
-    public CommentExtended extractCommentExtended(String json) {
+    public CommentExtended extractCommentExtended(String json) throws IOException{
         return internet.extractCommentExtended(json);
     }
 
     @Override
-    public IdeaExtended extractIdeaExtended(String json) {
+    public IdeaExtended extractIdeaExtended(String json) throws IOException{
         return internet.extractIdeaExtended(json);
     }
 
     @Override
-    public String insertComment(Comment c) {
+    public String insertComment(Comment c) throws IOException{
         return internet.insertComment(c);
     }
 
     @Override
-    public String insertIdea(Idea i) {
+    public String insertIdea(Idea i) throws IOException{
         return internet.insertIdea(i);
     }
 

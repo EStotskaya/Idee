@@ -10,10 +10,10 @@ package darkside_itschool2016;
  * @author Neo
  */
 public interface DBManager {
-    public CommentExtended readComment();
-    public IdeaExtended readIdea();
-    public void writeComment(Comment c);
-    public void writeIdea(Idea i);
-    public void updateComment(Comment c, int id);
-    public void updateIdea(Idea i, int id);   
+    public CommentExtended readComment(int id);
+    public IdeaExtended readIdea(int id);
+    public int writeComment(Comment c);
+    public int writeIdea(Idea i);
+    public int updateComment(Comment c, int id);
+    public int updateIdea(Idea i, int id);   
 }

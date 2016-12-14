@@ -5,6 +5,9 @@
  */
 package darkside_itschool2016;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,10 +49,8 @@ public class DataManagerTest {
         System.out.println("readComment");
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         CommentExtended expResult = null;
-        CommentExtended result = instance.readComment();
+        CommentExtended result = instance.readComment(1);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,10 +61,8 @@ public class DataManagerTest {
         System.out.println("readIdea");
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         IdeaExtended expResult = null;
-        IdeaExtended result = instance.readIdea();
+        IdeaExtended result = instance.readIdea(1);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -75,8 +74,6 @@ public class DataManagerTest {
         Comment c = null;
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         instance.writeComment(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -88,8 +85,6 @@ public class DataManagerTest {
         Idea i = null;
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         instance.writeIdea(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -102,8 +97,6 @@ public class DataManagerTest {
         int id = 0;
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         instance.updateComment(c, id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -116,8 +109,6 @@ public class DataManagerTest {
         int id = 0;
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         instance.updateIdea(i, id);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -129,10 +120,13 @@ public class DataManagerTest {
         String json = "";
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         Comment expResult = null;
-        Comment result = instance.extractComment(json);
+        Comment result = null;
+        try {
+            result = instance.extractComment(json);
+        } catch (IOException ex) {
+            Logger.getLogger(DataManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -144,10 +138,13 @@ public class DataManagerTest {
         String json = "";
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         Idea expResult = null;
-        Idea result = instance.extractIdea(json);
+        Idea result = null;
+        try {
+            result = instance.extractIdea(json);
+        } catch (IOException ex) {
+            Logger.getLogger(DataManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -159,10 +156,13 @@ public class DataManagerTest {
         String json = "";
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         CommentExtended expResult = null;
-        CommentExtended result = instance.extractCommentExtended(json);
+        CommentExtended result = null;
+        try {
+            result = instance.extractCommentExtended(json);
+        } catch (IOException ex) {
+            Logger.getLogger(DataManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -174,10 +174,13 @@ public class DataManagerTest {
         String json = "";
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         IdeaExtended expResult = null;
-        IdeaExtended result = instance.extractIdeaExtended(json);
+        IdeaExtended result = null;
+        try {
+            result = instance.extractIdeaExtended(json);
+        } catch (IOException ex) {
+            Logger.getLogger(DataManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -189,10 +192,13 @@ public class DataManagerTest {
         Comment c = null;
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         String expResult = "";
-        String result = instance.insertComment(c);
+        String result = null;
+        try {
+            result = instance.insertComment(c);
+        } catch (IOException ex) {
+            Logger.getLogger(DataManagerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -204,10 +210,13 @@ public class DataManagerTest {
         Idea i = null;
         DataManager instance = new DataManager(new Dummy_DBManager(), new Dummy_InternetManager());
         String expResult = "";
-        String result = instance.insertIdea(i);
+        String result = null;
+        try{
+            result = instance.insertIdea(i);
+        }catch(IOException exception){
+            
+        }
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

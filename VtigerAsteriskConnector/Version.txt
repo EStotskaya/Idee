@@ -1,0 +1,6 @@
+/*
+ * Copyright (C) www.vtiger.com. All rights reserved.
+ * @license Proprietary
+ */
+
+version = 1.4

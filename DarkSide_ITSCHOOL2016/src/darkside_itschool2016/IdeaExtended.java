@@ -20,4 +20,20 @@ class IdeaExtended extends Idea{
         this.author_name = author;
     }
     
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Idea ");           sb.append(id);
+        sb.append(": {user: ");       sb.append(user_id);
+        sb.append(", username: ");    sb.append(author_name);       
+        sb.append(", timestamp: ");   sb.append(timestamp);
+        sb.append(", rating: ");      sb.append(rating);        
+        sb.append(", tags: ");        sb.append(tags.toString());
+        sb.append(", text: ");        sb.append(text);
+        sb.append(", link: ");        sb.append(link);
+        sb.append(", file: ");        sb.append(file);
+        sb.append("}");
+        return sb.toString();
+    }
+    
 }

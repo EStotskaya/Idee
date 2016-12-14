@@ -5,15 +5,17 @@
  */
 package darkside_itschool2016;
 
+import java.io.IOException;
+
 /**
  *
  * @author Neo
  */
 public interface InternetManager {
-    public Comment extractComment(String json);
-    public Idea extractIdea(String json);
-    public CommentExtended extractCommentExtended(String json);
-    public IdeaExtended extractIdeaExtended(String json);    
-    public String insertComment(Comment c);
-    public String insertIdea(Idea i);
+    public Comment extractComment(String json) throws IOException;
+    public Idea extractIdea(String json) throws IOException;
+    public CommentExtended extractCommentExtended(String json) throws IOException;
+    public IdeaExtended extractIdeaExtended(String json) throws IOException;
+    public String insertComment(Comment c) throws IOException;
+    public String insertIdea(Idea i) throws IOException;
 }

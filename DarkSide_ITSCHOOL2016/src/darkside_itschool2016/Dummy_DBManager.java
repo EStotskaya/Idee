@@ -12,32 +12,32 @@ package darkside_itschool2016;
 public class Dummy_DBManager implements DBManager{
 
     @Override
-    public CommentExtended readComment() {
+    public CommentExtended readComment(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public IdeaExtended readIdea() {
+    public IdeaExtended readIdea(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void writeComment(Comment c) {
+    public int writeComment(Comment c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void writeIdea(Idea i) {
+    public int writeIdea(Idea i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void updateComment(Comment c, int id) {
+    public int updateComment(Comment c, int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void updateIdea(Idea i, int id) {
+    public int updateIdea(Idea i, int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

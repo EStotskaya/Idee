@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Programms/Java%20NetBeans/Main/DarkSide_ITSCHOOL2016/src/darkside_itschool2016/DarkSide_ITSCHOOL2016.java</file>
-            <file>file:/D:/Programms/Java%20NetBeans/Main/DarkSide_ITSCHOOL2016/test/darkside_itschool2016/DataManagerTest.java</file>
+            <file>file:/D:/Programms/Java%20NetBeans/Main/Idee/DarkSide_ITSCHOOL2016/src/darkside_itschool2016/DarkSide_ITSCHOOL2016.java</file>
+            <file>file:/D:/Programms/Java%20NetBeans/Main/Idee/DarkSide_ITSCHOOL2016/src/darkside_itschool2016/DataManager.java</file>
+            <file>file:/D:/Programms/Java%20NetBeans/Main/Idee/DarkSide_ITSCHOOL2016/src/darkside_itschool2016/Comment.java</file>
+            <file>file:/D:/Programms/Java%20NetBeans/Main/Idee/DarkSide_ITSCHOOL2016/src/darkside_itschool2016/MySQL_DBManager.java</file>
+            <file>file:/D:/Programms/Java%20NetBeans/Main/Idee/DarkSide_ITSCHOOL2016/src/darkside_itschool2016/DBManager.java</file>
         </group>
     </open-files>
 </project-private>
