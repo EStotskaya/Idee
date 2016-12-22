@@ -48,10 +48,11 @@ import butterknife.OnItemClick;
 public class AppActivity extends AppCompatActivity {
 
     public static String LOGIN_INFO = "login";
+    public static String LOGIN;
     private int currentPosition;
     ActionBarDrawerToggle drawerToggle;
     //change!!
-    String oursite;
+    String oursite = "http://darkside2016.herokuapp.com/";
 
     @Bind(R.id.drawerLayout) DrawerLayout drawerLayout;
     @Bind(R.id.drawer) ListView drawerList;
@@ -64,6 +65,7 @@ public class AppActivity extends AppCompatActivity {
     SharedPreferences spref;
     ArrayList<String> titles;
     int[] imagesArr = new int[]{R.drawable.main_icon, R.drawable.profile_pictures, R.drawable.search};
+
 
     @OnItemClick(R.id.drawer) public void selectCategory(AdapterView<?> adapter, View view, int position, long id )
     {
@@ -285,7 +287,7 @@ public class AppActivity extends AppCompatActivity {
 
 
     //+onPostExecute; +change method
-    protected class myAsyncTask extends AsyncTask<Void, Void, String>
+    public class myAsyncTask extends AsyncTask<Void, Void, String>
     {
         HttpURLConnection http;
         BufferedReader buffer;
@@ -296,6 +298,7 @@ public class AppActivity extends AppCompatActivity {
         protected void onPreExecute()
         {
             Log.d("Begin","AsyncTask");
+            Toast.makeText(AppActivity.this, "Try to connect...", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -307,6 +310,8 @@ public class AppActivity extends AppCompatActivity {
 
                 http= (HttpURLConnection)url.openConnection();
                 http.setRequestMethod("GET");
+                http.setReadTimeout(15000);
+                http.setConnectTimeout(15000);
                 http.connect();
 
                 StringBuffer sbuffer = new StringBuffer();
@@ -321,10 +326,12 @@ public class AppActivity extends AppCompatActivity {
                 }
 
                 json = sbuffer.toString();
+                Toast.makeText(AppActivity.this, "Got json", Toast.LENGTH_LONG).show();
 
             }catch(Exception e)
             {
                 Log.e("Bad URL", "Check url");
+                //Toast.makeText(AppActivity.this, "Unable to connect to server", Toast.LENGTH_LONG).show();
             }
 
             return json;

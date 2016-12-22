@@ -40,10 +40,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
+
+import java.awt.image.BufferedImage;
+import java.lang.Object;
+import java.awt.Image;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -65,9 +72,14 @@ public class NewIdeaFragment extends Fragment {
 
     private boolean tagWasClicked;
 
+    private byte[] pic;
+
+    String url = "http://darkside2016.herokuapp.com/";
+
     @OnClick(R.id.submit) public void jsonClick(Button button)
     {
-        submit();
+        JSONObject json = submit();
+        AsyncRequest request = new AsyncRequest(url, json.toString(), "POST");
     }
 
     @OnClick(R.id.addTag) public void addTag(Button butt)
@@ -108,6 +120,10 @@ public class NewIdeaFragment extends Fragment {
                             imageFrame.setVisibility(View.VISIBLE);
                             imageFrame.setImageBitmap(image);
 
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            pic = stream.toByteArray();
+
                         }
                     }else{
                         Toast.makeText(getActivity(), "Intent is null", Toast.LENGTH_LONG).show();
@@ -128,6 +144,14 @@ public class NewIdeaFragment extends Fragment {
                 {
                     final Uri imageUri = intent.getData();
                     String imageName = imageUri.toString();
+
+                    BufferedImage image = ImageIO.read(imageUri);
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(image, "jpg", baos);
+                    baos.flush();
+
+                    pic = baos.toByteArray();
 
 
                     ImageLoader loader = ImageLoader.getInstance();
@@ -248,8 +272,16 @@ public class NewIdeaFragment extends Fragment {
     {
         EditText tag = (EditText) getView().findViewById(R.id.tag);
 
+        myJSONClass myJson;
 
-        myJSONClass myJson = new myJSONClass(AppActivity.LOGIN_INFO, ideaBody.getText().toString(), tag.getText().toString());
+        if(pic.length>0)
+        {
+            myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString(), pic);
+        }
+        else
+        {
+            myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString());
+        }
 
 
         Gson gson = new Gson();
@@ -273,6 +305,15 @@ public class NewIdeaFragment extends Fragment {
         private String name = "";
         private String idea = "";
         private String tag = "";
+        private byte[] picture;
+
+        private myJSONClass(String name, String idea, String tag, byte[] picture)
+        {
+            this.name = name;
+            this.idea = idea;
+            this.tag = tag;
+            this.picture = picture;
+        }
 
         private myJSONClass(String name, String idea, String tag)
         {
