@@ -52,7 +52,7 @@ public class AppActivity extends AppCompatActivity {
     private int currentPosition;
     ActionBarDrawerToggle drawerToggle;
     //change!!
-    String oursite = "http://darkside2016.herokuapp.com/";
+    String oursite = "http://darkside2016.herokuapp.com:80/countries?auth=xxx";
 
     @Bind(R.id.drawerLayout) DrawerLayout drawerLayout;
     @Bind(R.id.drawer) ListView drawerList;

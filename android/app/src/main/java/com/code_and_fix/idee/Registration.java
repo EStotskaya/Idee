@@ -17,6 +17,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.regex.Pattern;
 
 import butterknife.Bind;
@@ -35,6 +40,7 @@ public class Registration extends AppCompatActivity {
     SharedPreferences sp;
     Fonts fonts;
     Pattern p = Pattern.compile("^[a-zA-Z0-9]{3,11}$");
+    String url = "http://darkside2016.herokuapp.com:80/countries?auth=xxx";
 
     @OnClick(R.id.backButt) public void back(Button butt)
     {
@@ -59,7 +65,7 @@ public class Registration extends AppCompatActivity {
                     SharedPreferences.Editor edit = sp.edit();
                     edit.putString("Saved login", login.getText().toString());
                     edit.putString("Saved pass", pass.getText().toString());
-                    edit.commit();
+                    edit.apply();
                     Toast.makeText(Registration.this, "Saved", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(Registration.this, MainActivity.class);
@@ -95,8 +101,12 @@ public class Registration extends AppCompatActivity {
             SharedPreferences.Editor edit = sp.edit();
             edit.putString("Saved login", login.getText().toString());
             edit.putString("Saved pass", pass.getText().toString());
-            edit.commit();
+            edit.apply();
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+
+            JSONObject json = submit();
+            AsyncRequest request = new AsyncRequest(url, json.toString(), "POST");
+            Toast.makeText(this, "Registered", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(this, AppActivity.class);
             intent.putExtra(AppActivity.LOGIN_INFO, login.getText().toString());
@@ -140,13 +150,50 @@ public class Registration extends AppCompatActivity {
     {
         String mess = "";
 
-        if(!((login.getText().toString() != null)&&(p.matcher(login.getText().toString()).matches())))
+        if(!((login.getText().toString().length() > 0)&&(p.matcher(login.getText().toString()).matches())))
             mess += "Invalid login\n";
 
-        if(!((pass.getText().toString()!=null)&&(pass.getText().toString().length()>3)&&(pass.getText().toString().length()<11)))
+        if(!((pass.getText().toString().length() > 0)&&(pass.getText().toString().length()>3)&&(pass.getText().toString().length()<11)))
             mess += "Invalid password";
 
         return mess;
+    }
+
+    private JSONObject submit()
+    {
+        Registration.myJSONClass myJson;
+
+        myJson = new Registration.myJSONClass(login.getText().toString(), pass.getText().toString());
+
+
+        Gson gson = new Gson();
+        String my = gson.toJson(myJson);
+
+        JSONObject json = new JSONObject();
+        try{
+            json = new JSONObject(my);
+            Toast.makeText(this, json.toString(), Toast.LENGTH_LONG).show();
+        }catch(JSONException e)
+        {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+        }
+
+
+        return json;
+    }
+
+    private class myJSONClass
+    {
+        private String name = "";
+        private String password = "";
+
+        private myJSONClass(String name, String password)
+        {
+            this.name = name;
+            this.password = password;
+
+        }
+
     }
 
 }

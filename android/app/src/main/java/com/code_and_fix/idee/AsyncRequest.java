@@ -79,10 +79,13 @@ public class AsyncRequest extends AsyncTask {
                 bw.flush();
                 bw.close();
                 os.close();
+
             }
             else {
                 try {
                     connection.setRequestMethod("GET");
+
+
                 } catch (ProtocolException e) {
                     e.printStackTrace();
                 }
@@ -92,7 +95,7 @@ public class AsyncRequest extends AsyncTask {
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpsURLConnection.HTTP_OK) {
                 String line;
-                int size = 600000;
+
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 while ((line=br.readLine()) != null) {
                     response+=line;
@@ -100,6 +103,7 @@ public class AsyncRequest extends AsyncTask {
                 }
                 br.close();
                 mResponseData = response;
+                System.out.println("Got json");
             } else {
                 String error;
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -111,9 +115,6 @@ public class AsyncRequest extends AsyncTask {
 
             }
 
-            if (mResponseData != null && mResponseData.isEmpty()) {
-
-            }
         }
         catch (IOException e) {
 

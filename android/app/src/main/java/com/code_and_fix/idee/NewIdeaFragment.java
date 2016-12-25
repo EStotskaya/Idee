@@ -47,10 +47,10 @@ import java.io.File;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-import java.awt.image.BufferedImage;
+/*import java.awt.image.BufferedImage;
 import java.lang.Object;
 import java.awt.Image;
-import javax.imageio.ImageIO;
+import javax.imageio.ImageIO;*/
 
 
 /**
@@ -74,12 +74,13 @@ public class NewIdeaFragment extends Fragment {
 
     private byte[] pic;
 
-    String url = "http://darkside2016.herokuapp.com/";
+    String url = "http://darkside2016.herokuapp.com:80/countries?auth=xxx";
 
     @OnClick(R.id.submit) public void jsonClick(Button button)
     {
         JSONObject json = submit();
         AsyncRequest request = new AsyncRequest(url, json.toString(), "POST");
+        Toast.makeText(this.getActivity(), "Posted", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.addTag) public void addTag(Button butt)
@@ -145,13 +146,13 @@ public class NewIdeaFragment extends Fragment {
                     final Uri imageUri = intent.getData();
                     String imageName = imageUri.toString();
 
-                    BufferedImage image = ImageIO.read(imageUri);
+                    /*BufferedImage image = ImageIO.read(imageUri);
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     ImageIO.write(image, "jpg", baos);
                     baos.flush();
 
-                    pic = baos.toByteArray();
+                    pic = baos.toByteArray();*/
 
 
                     ImageLoader loader = ImageLoader.getInstance();
