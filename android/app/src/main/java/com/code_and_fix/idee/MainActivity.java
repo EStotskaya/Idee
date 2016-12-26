@@ -11,6 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import butterknife.ButterKnife;
 import butterknife.Bind;
@@ -70,11 +76,18 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.signToApp) public void signToApp(Button button)
     {
-        Intent intent = new Intent(this, AppActivity.class);
-        intent.putExtra(AppActivity.LOGIN_INFO, editLogin.getText().toString());
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        finish();
-        startActivity(intent);
+        if(editLogin.getText().toString().length()>0 && editPass.getText().toString().length()>0)
+        {
+            Intent intent = new Intent(this, AppActivity.class);
+            intent.putExtra(AppActivity.LOGIN_INFO, editLogin.getText().toString());
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            finish();
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(this, "Something is wrong", Toast.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.anonymous)
@@ -109,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
 
 
 }

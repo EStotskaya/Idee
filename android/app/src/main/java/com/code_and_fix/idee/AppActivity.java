@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -52,7 +53,8 @@ public class AppActivity extends AppCompatActivity {
     private int currentPosition;
     ActionBarDrawerToggle drawerToggle;
     //change!!
-    String oursite = "http://darkside2016.herokuapp.com:80/countries?auth=xxx";
+
+
 
     @Bind(R.id.drawerLayout) DrawerLayout drawerLayout;
     @Bind(R.id.drawer) ListView drawerList;
@@ -94,6 +96,8 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
         ButterKnife.bind(this);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         drawerList.setAdapter(new DrawerAdapter(this, R.layout.drawer_item, getResources().getStringArray(R.array.categories), imagesArr));
 
         if (savedInstanceState == null)
@@ -138,7 +142,7 @@ public class AppActivity extends AppCompatActivity {
 
         panel.setVisibility(View.VISIBLE);
 
-        new myAsyncTask().execute();
+
     }
 
 
@@ -286,57 +290,7 @@ public class AppActivity extends AppCompatActivity {
     }
 
 
-    //+onPostExecute; +change method
-    public class myAsyncTask extends AsyncTask<Void, Void, String>
-    {
-        HttpURLConnection http;
-        BufferedReader buffer;
-        String json;
-        URL url;
 
-        @Override
-        protected void onPreExecute()
-        {
-            Log.d("Begin","AsyncTask");
-            Toast.makeText(AppActivity.this, "Try to connect...", Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        protected String doInBackground(Void...params)
-        {
-
-            try {
-                url = new URL(oursite);
-
-                http= (HttpURLConnection)url.openConnection();
-                http.setRequestMethod("GET");
-                http.setReadTimeout(15000);
-                http.setConnectTimeout(15000);
-                http.connect();
-
-                StringBuffer sbuffer = new StringBuffer();
-                buffer = new BufferedReader(new InputStreamReader(http.getInputStream()));
-
-                String line = "";
-
-                while (buffer.readLine() != null)
-                {
-                    line = buffer.readLine();
-                    sbuffer.append(line);
-                }
-
-                json = sbuffer.toString();
-                Toast.makeText(AppActivity.this, "Got json", Toast.LENGTH_LONG).show();
-
-            }catch(Exception e)
-            {
-                Log.e("Bad URL", "Check url");
-                //Toast.makeText(AppActivity.this, "Unable to connect to server", Toast.LENGTH_LONG).show();
-            }
-
-            return json;
-        }
-    }
 
     void getSPref()
     {

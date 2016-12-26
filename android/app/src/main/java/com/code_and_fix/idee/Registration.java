@@ -40,7 +40,8 @@ public class Registration extends AppCompatActivity {
     SharedPreferences sp;
     Fonts fonts;
     Pattern p = Pattern.compile("^[a-zA-Z0-9]{3,11}$");
-    String url = "http://darkside2016.herokuapp.com:80/countries?auth=xxx";
+    String url = "http://darkside2016.herokuapp.com:80/user?name=";
+    String urlpass = "&password=";
 
     @OnClick(R.id.backButt) public void back(Button butt)
     {
@@ -105,7 +106,7 @@ public class Registration extends AppCompatActivity {
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 
             JSONObject json = submit();
-            AsyncRequest request = new AsyncRequest(url, json.toString(), "POST");
+            AsyncRequest request = new AsyncRequest(url+"\""+login.getText().toString()+"\""+urlpass+"\""+pass.getText().toString()+"\"", json.toString(), "POST");
             Toast.makeText(this, "Registered", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(this, AppActivity.class);

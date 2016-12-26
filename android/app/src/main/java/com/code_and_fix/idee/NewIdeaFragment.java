@@ -74,13 +74,22 @@ public class NewIdeaFragment extends Fragment {
 
     private byte[] pic;
 
-    String url = "http://darkside2016.herokuapp.com:80/countries?auth=xxx";
+    String BASE_URL = "http://darkside2016.herokuapp.com:80";
+    String URI = "/user";
+    String paramsUrl = "?id=1";
 
     @OnClick(R.id.submit) public void jsonClick(Button button)
     {
         JSONObject json = submit();
-        AsyncRequest request = new AsyncRequest(url, json.toString(), "POST");
-        Toast.makeText(this.getActivity(), "Posted", Toast.LENGTH_LONG).show();
+        try
+        {
+            AsyncRequest request = new AsyncRequest(BASE_URL + URI + paramsUrl, json.toString(), "POST");
+            Toast.makeText(this.getActivity(), "Posted", Toast.LENGTH_LONG).show();
+        }
+        catch(NullPointerException e)
+        {
+            Toast.makeText(this.getActivity(), "Incorrect idea", Toast.LENGTH_LONG).show();
+        }
     }
 
     @OnClick(R.id.addTag) public void addTag(Button butt)
@@ -272,33 +281,36 @@ public class NewIdeaFragment extends Fragment {
     private JSONObject submit()
     {
         EditText tag = (EditText) getView().findViewById(R.id.tag);
-
         myJSONClass myJson;
 
-        if(pic.length>0)
-        {
-            myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString(), pic);
+        if(tag!=null&&tag.getText().toString().length()>0&&ideaBody.getText().toString().length()>0) {
+
+
+            if (pic.length > 0) {
+                myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString(), pic);
+            } else {
+                myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString());
+            }
+
+
+            Gson gson = new Gson();
+            String my = gson.toJson(myJson);
+
+            JSONObject json = new JSONObject();
+            try {
+                json = new JSONObject(my);
+                Toast.makeText(this.getActivity(), json.toString(), Toast.LENGTH_LONG).show();
+            } catch (JSONException e) {
+                Toast.makeText(this.getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+            return json;
         }
         else
         {
-            myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString());
+            Toast.makeText(getActivity(), "Add tag and your idea", Toast.LENGTH_SHORT).show();
+            return null;
         }
-
-
-        Gson gson = new Gson();
-        String my = gson.toJson(myJson);
-
-        JSONObject json = new JSONObject();
-        try{
-            json = new JSONObject(my);
-            Toast.makeText(this.getActivity(), json.toString(), Toast.LENGTH_LONG).show();
-        }catch(JSONException e)
-        {
-            Toast.makeText(this.getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
-        }
-
-
-        return json;
     }
 
     private class myJSONClass

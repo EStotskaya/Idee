@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -23,6 +25,21 @@ public class SearchFragment extends Fragment {
     @Bind(R.id.searchTag) EditText searchTag;
     @Bind(R.id.startSearch) Button start;
     Fonts fonts;
+
+    @OnClick(R.id.startSearch) public void startSearch(Button butt)
+    {
+        if(searchTag.getText().toString().length() > 0)
+        {
+            try
+            {
+                new AsyncRequest(ConnectParams.BASE_URL + ConnectParams.allIdeas + ConnectParams.tag, null, "GET");
+            }
+            catch(Exception e)
+            {
+                Toast.makeText(this.getActivity(), "Can't connect", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
 
     public SearchFragment() {
@@ -40,8 +57,11 @@ public class SearchFragment extends Fragment {
         searchText.setTypeface(fonts.caviarBold());
 
         start.setTypeface(fonts.caviarBold());
+
         return view;
     }
+
+
 
 
 
