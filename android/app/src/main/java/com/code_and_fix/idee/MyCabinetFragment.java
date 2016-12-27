@@ -4,9 +4,11 @@ package com.code_and_fix.idee;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +17,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -98,12 +107,23 @@ public class MyCabinetFragment extends Fragment {
         cabTitle.setTypeface(fonts.caviarBold());
         ideaTitle.setTypeface(fonts.caviarBold());
         changePic.setTypeface(fonts.caviarNorm());
+        name.setTypeface(fonts.caviarNorm());
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity()).build();
         ImageLoader.getInstance().init(config);
 
         spref = getActivity().getSharedPreferences("accInfo", MODE_PRIVATE);
         String imagename = spref.getString("image", "");
+
+        Intent intent = getActivity().getIntent();
+        if (intent != null)
+        {
+            if(intent.getStringExtra(AppActivity.LOGIN_INFO) != null)
+            {
+                name.setText(intent.getStringExtra(AppActivity.LOGIN_INFO));
+            }
+
+        }
 
         if(imagename.length()>0)
         {
@@ -124,6 +144,69 @@ public class MyCabinetFragment extends Fragment {
         args.putString("Name", name);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public class myAsyncTask extends AsyncTask<Void, Void, String> {
+        HttpURLConnection http;
+        BufferedReader buffer;
+        String json;
+        URL url;
+
+        @Override
+        protected void onPreExecute() {
+            Log.d("Begin", "AsyncTask");
+            Toast.makeText(getActivity(), "Try to connect...", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            try {
+                url = new URL(ConnectParams.BASE_URL + ConnectParams.allIdeas);
+
+                http = (HttpURLConnection) url.openConnection();
+                http.setRequestMethod("GET");
+                http.setRequestProperty("User-Agent", ConnectParams.USER_AGENT);
+
+                http.connect();
+
+
+                int responseCode = http.getResponseCode();
+
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    StringBuffer sbuffer = new StringBuffer();
+                    buffer = new BufferedReader(new InputStreamReader(http.getInputStream()));
+                    String line = "";
+
+                    while ((line = buffer.readLine()) != null) {
+
+                        sbuffer.append(line);
+                    }
+                    buffer.close();
+
+                    json = sbuffer.toString();
+                    Toast.makeText(getActivity(), json, Toast.LENGTH_LONG).show();
+
+                }
+
+            } catch (Exception e) {
+                Log.e("Bad URL", "Check url");
+            }
+
+            return json;
+        }
+
+        @Override
+        protected void onPostExecute(String json) {
+            super.onPostExecute(json);
+
+            Gson gson = new Gson();
+            String my = gson.toJson(json);
+
+            JSONObject jSon = new JSONObject();
+
+
+        }
     }
 
 

@@ -32,12 +32,16 @@ public class SearchFragment extends Fragment {
         {
             try
             {
-                new AsyncRequest(ConnectParams.BASE_URL + ConnectParams.allIdeas + ConnectParams.tag, null, "GET");
+                new AsyncRequest(ConnectParams.BASE_URL + ConnectParams.tag + searchTag.getText().toString(), null, "GET");
             }
             catch(Exception e)
             {
                 Toast.makeText(this.getActivity(), "Can't connect", Toast.LENGTH_LONG).show();
             }
+        }
+        else
+        {
+            Toast.makeText(getActivity(), "Enter tag", Toast.LENGTH_SHORT).show();
         }
     }
 

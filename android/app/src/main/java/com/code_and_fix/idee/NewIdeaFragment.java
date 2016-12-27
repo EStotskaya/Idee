@@ -42,6 +42,7 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.URLEncoder;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -74,19 +75,24 @@ public class NewIdeaFragment extends Fragment {
 
     private byte[] pic;
 
-    String BASE_URL = "http://darkside2016.herokuapp.com:80";
+    /*String BASE_URL = "http://darkside2016.herokuapp.com:80";
     String URI = "/user";
-    String paramsUrl = "?id=1";
+    String paramsUrl = "?id=1";*/
+
+
 
     @OnClick(R.id.submit) public void jsonClick(Button button)
     {
         JSONObject json = submit();
         try
         {
-            AsyncRequest request = new AsyncRequest(BASE_URL + URI + paramsUrl, json.toString(), "POST");
+            String urlString = "http://darkside2016.herokuapp.com:80/"+
+                    URLEncoder.encode(json.toString(), "windows-1251")+
+                    "&token="+getActivity().getIntent().getStringExtra("token");
+            AsyncRequest request = new AsyncRequest(urlString, json.toString(), "POST");
             Toast.makeText(this.getActivity(), "Posted", Toast.LENGTH_LONG).show();
         }
-        catch(NullPointerException e)
+        catch(Exception e)
         {
             Toast.makeText(this.getActivity(), "Incorrect idea", Toast.LENGTH_LONG).show();
         }
@@ -285,12 +291,22 @@ public class NewIdeaFragment extends Fragment {
 
         if(tag!=null&&tag.getText().toString().length()>0&&ideaBody.getText().toString().length()>0) {
 
+            Intent intent = getActivity().getIntent();
+            if (intent != null)
+            {
+                if (pic != null) {
+                    myJson = new myJSONClass(intent.getStringExtra(AppActivity.LOGIN_INFO), ideaBody.getText().toString(), tag.getText().toString(), pic);
+                } else {
+                    myJson = new myJSONClass(intent.getStringExtra(AppActivity.LOGIN_INFO), ideaBody.getText().toString(), tag.getText().toString());
+                }
+            }
 
-            if (pic.length > 0) {
-                myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString(), pic);
-            } else {
+            else
+            {
                 myJson = new myJSONClass(AppActivity.LOGIN, ideaBody.getText().toString(), tag.getText().toString());
             }
+
+
 
 
             Gson gson = new Gson();

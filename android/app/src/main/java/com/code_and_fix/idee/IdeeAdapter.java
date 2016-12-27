@@ -86,9 +86,9 @@ public class IdeeAdapter extends ArrayAdapter
         cell.rate.setText(0);
         try {
             Date dt = new Date(_entries.get(position).getString("timestamp"));
-            cell.username.setText(_entries.get(position).getString("name"));
+            cell.username.setText(_entries.get(position).getString("user_id"));
             cell.time.setText(dt.toString());
-            cell.ideaText.setText(_entries.get(position).getString("idea"));
+            cell.ideaText.setText(_entries.get(position).getString("text"));
             try {
                 cell.tagText.setText(_entries.get(position).getString("tag"));
             }catch(NullPointerException e)

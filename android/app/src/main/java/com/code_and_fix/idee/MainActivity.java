@@ -3,8 +3,10 @@ package com.code_and_fix.idee;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -76,18 +82,16 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.signToApp) public void signToApp(Button button)
     {
-        if(editLogin.getText().toString().length()>0 && editPass.getText().toString().length()>0)
-        {
-            Intent intent = new Intent(this, AppActivity.class);
-            intent.putExtra(AppActivity.LOGIN_INFO, editLogin.getText().toString());
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            finish();
-            startActivity(intent);
+        if(editLogin.getText().toString().length()>0 && editPass.getText().toString().length()>0) {
+            String url = "http://darkside2016.herokuapp.com:80/login?name=" + editLogin.getText().toString() + "&password=" + editPass.getText().toString();
+            String login = editLogin.getText().toString();
+            new myAsyncTask().execute(url, login);
         }
         else
         {
             Toast.makeText(this, "Something is wrong", Toast.LENGTH_LONG).show();
         }
+
     }
 
     @OnClick(R.id.anonymous)
@@ -121,6 +125,87 @@ public class MainActivity extends AppCompatActivity {
             editPass.setText(sPref.getString("Saved pass", ""));
 
         }
+
+
+    }
+
+    public class myAsyncTask extends AsyncTask<String, Void, String>
+    {
+        HttpURLConnection http;
+        BufferedReader buffer;
+
+        URL url;
+
+        @Override
+        protected void onPreExecute()
+        {
+            Log.d("Begin","AsyncTask");
+            Toast.makeText(MainActivity.this, "Try to connect...", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected String doInBackground(String...params)
+        {
+
+            try {
+                url = new URL(params[0]);
+
+                http= (HttpURLConnection)url.openConnection();
+                http.setRequestMethod("GET");
+                http.setRequestProperty("User-Agent", ConnectParams.USER_AGENT);
+
+                http.connect();
+
+
+                int responseCode = http.getResponseCode();
+
+                if(responseCode < 400)
+                {
+                    StringBuffer sbuffer = new StringBuffer();
+                    buffer = new BufferedReader(new InputStreamReader(http.getInputStream()));
+                    String line = "";
+
+                    while ((line = buffer.readLine()) != null) {
+
+                        sbuffer.append(line);
+                    }
+                    buffer.close();
+
+                    String token = sbuffer.toString();
+
+
+                    {
+
+                        Intent intent = new Intent(MainActivity.this, AppActivity.class);
+                        intent.putExtra(AppActivity.LOGIN_INFO, params[1]);
+                        intent.putExtra("token", token);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+
+                    return sbuffer.toString();
+
+                }
+
+            }catch(Exception e)
+            {
+                Log.e("Bad URL", "Check url");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String json)
+        {
+            super.onPostExecute(json);
+
+
+
+        }
+
+
     }
 
 

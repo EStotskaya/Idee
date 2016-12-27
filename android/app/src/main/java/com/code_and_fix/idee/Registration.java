@@ -106,7 +106,7 @@ public class Registration extends AppCompatActivity {
             Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
 
             JSONObject json = submit();
-            AsyncRequest request = new AsyncRequest(url+"\""+login.getText().toString()+"\""+urlpass+"\""+pass.getText().toString()+"\"", json.toString(), "POST");
+            AsyncRequest request = new AsyncRequest(url+login.getText().toString()+urlpass+pass.getText().toString(), json.toString(), "POST");
             Toast.makeText(this, "Registered", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(this, AppActivity.class);

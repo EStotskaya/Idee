@@ -11,5 +11,5 @@ public class ConnectParams {
     public static String URI = "/user";
     public static String paramsUrl = "?id=1";
     public static String allIdeas = "/idea?id=all";
-    public static String tag = "&tags=";
+    public static String tag = "/idea?tag=";
 }

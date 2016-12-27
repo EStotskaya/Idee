@@ -15,14 +15,19 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 /**
@@ -46,6 +51,8 @@ public class AllIdeasFragment extends Fragment {
         View view = inflater.inflate(R.layout.idea_cell, container, true);
 
         //new AsyncRequest((ConnectParams.BASE_URL + ConnectParams.URI + ConnectParams.paramsUrl), null, "GET");
+        //View view = inflater.inflate(R.layout.fragment_all_ideas, container, false);
+        //ButterKnife.bind(this,view);
         new myAsyncTask().execute();
 
         return inflater.inflate(R.layout.fragment_all_ideas, container, false);
@@ -71,7 +78,7 @@ public class AllIdeasFragment extends Fragment {
         {
 
             try {
-                url = new URL(ConnectParams.BASE_URL+ConnectParams.allIdeas);
+                url = new URL("http://darkside2016.herokuapp.com:80/"+"idea?id="+1);
 
                 http= (HttpURLConnection)url.openConnection();
                 http.setRequestMethod("GET");
@@ -114,12 +121,39 @@ public class AllIdeasFragment extends Fragment {
 
             Gson gson = new Gson();
             String my = gson.toJson(json);
+            List<JSONObject> list = new ArrayList<>();
 
-            JSONObject jSon = new JSONObject();
+            if(json != null) {
+                try {
+                    JSONObject jSon = new JSONObject(json);
+                    list.add(jSon);
+
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Can't load idea", Toast.LENGTH_SHORT).show();
+                }
+
+
+                    //ideasList.setAdapter(new IdeeAdapter(getActivity(), R.layout.idea_cell, list));
+
+            }
+            else
+            {
+                Toast.makeText(getActivity(), "Can't load idea", Toast.LENGTH_SHORT).show();
+            }
+
 
         }
 
 
+    }
+
+    public static JSONArray makeArrayFromString(String data) {
+        try {
+            return new JSONArray(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
